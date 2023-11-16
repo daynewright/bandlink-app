@@ -1,14 +1,11 @@
 import { StyleSheet } from "react-native";
-import { Link, Stack } from "expo-router";
-import { View } from "@/components/Themed";
 
-import FeedList from "@/components/FeedList";
+import { Text, View } from "@/components/Themed";
 
-export default function Feed() {
+export default function Chat() {
   return (
     <View style={styles.container}>
-      <FeedList />
-      <Link href="/(modals)/login">Login</Link>
+      <Text>Chat</Text>
     </View>
   );
 }
