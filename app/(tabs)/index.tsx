@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
-import { Link, Stack } from "expo-router";
+import { Link } from "expo-router";
 import { View } from "@/components/Themed";
 
-import FeedList from "@/components/FeedList";
+import EventList from "@/components/Event/EventList";
 
 export default function Feed() {
   return (
     <View style={styles.container}>
-      <FeedList />
+      <EventList />
       <Link href="/(modals)/login">Login</Link>
     </View>
   );

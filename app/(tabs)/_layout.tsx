@@ -6,16 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "@/constants/Colors";
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -25,7 +15,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors.light.primary,
       }}
     >
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="index"
         options={{
           headerTitle: "Feed",
@@ -34,10 +24,11 @@ export default function TabLayout() {
             <Ionicons name="newspaper-outline" color={color} size={size} />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
-        name="events"
+        name="index"
         options={{
+          headerTitle: "Events",
           tabBarLabel: "Events",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar-outline" color={color} size={size} />
@@ -47,6 +38,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="store"
         options={{
+          headerTitle: "Store",
           tabBarLabel: "Store",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="cart-outline" color={color} size={size} />
@@ -56,6 +48,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="chat"
         options={{
+          headerTitle: "Chat",
           tabBarLabel: "Chat",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="chatbox-outline" color={color} size={size} />
@@ -65,6 +58,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
+          headerTitle: "Profile",
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle-outline" color={color} size={size} />
