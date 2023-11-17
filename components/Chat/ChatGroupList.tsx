@@ -2,10 +2,10 @@ import { useRef, useState, useEffect } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
 import bandEvents from "@/mockData/events";
 
-import ChatCard from "@/components/ChatCard";
 import { BandEvent } from "@/types/events";
+import ChatGroupPreviewCard from "@/components/Chat/ChatGroupPreviewCard";
 
-const ChatList = () => {
+const ChatDirectList = () => {
   const eventListRef = useRef<FlatList>(null);
   const [events, setEvents] = useState<BandEvent[]>([]);
 
@@ -16,7 +16,16 @@ const ChatList = () => {
   }, [events]);
 
   const RenderFeedItem: ListRenderItem<any> = ({ item }) => {
-    return <ChatCard />;
+    return (
+      <ChatGroupPreviewCard
+        group="Winterguard"
+        time="1 day ago"
+        avatar={`https://picsum.photos/${
+          Math.floor(Math.random() * 40) + 1
+        }/200`}
+        memberCount="28"
+      />
+    );
   };
 
   return (
@@ -26,4 +35,4 @@ const ChatList = () => {
   );
 };
 
-export default ChatList;
+export default ChatDirectList;

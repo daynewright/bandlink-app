@@ -15,16 +15,6 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors.light.primary,
       }}
     >
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          headerTitle: "Feed",
-          tabBarLabel: "Feed",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="newspaper-outline" color={color} size={size} />
-          ),
-        }}
-      /> */}
       <Tabs.Screen
         name="index"
         options={{
@@ -46,7 +36,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="chat"
+        name="(chat)"
         options={{
           headerTitle: "Chat",
           tabBarLabel: "Chat",

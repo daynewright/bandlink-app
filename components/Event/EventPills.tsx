@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { View, Text } from "@/components/Themed";
+import { View, Text } from "@/components/utils/Themed";
 import { primary } from "@/constants/Colors";
 
 const EventPills = ({ pills }: { pills: string[] }) => {

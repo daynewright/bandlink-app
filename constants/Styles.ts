@@ -5,7 +5,6 @@ export const defaultStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff", //Colors[theme].backgroundContainer,
-    padding: 26,
   },
   inputField: {
     height: 44,

@@ -1,4 +1,4 @@
-import { Text, View } from "@/components/Themed";
+import { Text, View } from "@/components/utils/Themed";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
 import { useRouter } from "expo-router";

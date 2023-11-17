@@ -1,7 +1,7 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { primary } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { View, Text } from "@/components/Themed";
+import { View, Text } from "@/components/utils/Themed";
 
 const EventActionRow = () => {
   return (
@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
   actionButton: {
     flexDirection: "row",
     alignItems: "center",
-    color: primary.lightgrey,
+    color: primary.darkgrey,
   },
   actionText: {
     marginLeft: 6,
-    color: "#555",
+    color: primary.darkgrey,
   },
 });

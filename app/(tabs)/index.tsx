@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import { View } from "@/components/Themed";
+import { View } from "@/components/utils/Themed";
 
 import EventList from "@/components/Event/EventList";
 

@@ -2,22 +2,30 @@ import { useRef, useState, useEffect } from "react";
 import { FlatList, ListRenderItem, View } from "react-native";
 import bandEvents from "@/mockData/events";
 
-import EventCard from "@/components/Event/EventCard";
+import ChatDirectPreviewCard from "@/components/Chat/ChatDirectPreviewCard";
 import { BandEvent } from "@/types/events";
-import getRandomList from "@/mockData/getRandomList";
 
-const EventList = () => {
+const ChatDirectList = () => {
   const eventListRef = useRef<FlatList>(null);
   const [events, setEvents] = useState<BandEvent[]>([]);
 
   useEffect(() => {
     if (!events.length) {
-      setEvents(bandEvents.map((be) => ({ ...be, pills: getRandomList() })));
+      setEvents(bandEvents);
     }
   }, [events]);
 
   const RenderFeedItem: ListRenderItem<any> = ({ item }) => {
-    return <EventCard event={item} />;
+    return (
+      <ChatDirectPreviewCard
+        sender="Johnny Joe"
+        message="Yo how is it going?"
+        avatar={`https://picsum.photos/${
+          Math.floor(Math.random() * 40) + 1
+        }/200`}
+        time="8:13pm"
+      />
+    );
   };
 
   return (
@@ -27,4 +35,4 @@ const EventList = () => {
   );
 };
 
-export default EventList;
+export default ChatDirectList;
