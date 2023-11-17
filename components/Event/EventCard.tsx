@@ -63,7 +63,7 @@ const EventCard = ({ event }: { event: BandEvent }) => {
           <EventUserProfile
             username={`${user.name.first} ${user.name.last}`}
             avatarUri={user.picture.medium}
-            headline=""
+            headline="title"
           />
         )}
         <Text style={styles.dateText}>{readableDate(startTime)}</Text>

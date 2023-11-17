@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import getRandomColor from "@/utils/getRandomColor";
 import { primary } from "@/constants/Colors";
+import UserChicklet from "../Profile/UserChicklet";
 
 type Props = {
   sender: string;

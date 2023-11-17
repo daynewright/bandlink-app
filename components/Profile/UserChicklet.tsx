@@ -13,8 +13,8 @@ const UserChicklet = ({ username, avatarUri, headline }: Props) => {
       <Image source={{ uri: avatarUri }} style={styles.avatar} />
       <View style={styles.userInfo}>
         <Text style={styles.name}>{username}</Text>
-        <Text style={styles.headline}>Title</Text>
-        <Text style={styles.timestamp}>Section - Role</Text>
+        <Text style={styles.headline}>{headline}</Text>
+        <Text style={styles.section}>Section - Role</Text>
       </View>
     </View>
   );
@@ -22,7 +22,6 @@ const UserChicklet = ({ username, avatarUri, headline }: Props) => {
 
 const styles = StyleSheet.create({
   userInfoContainer: {
-    width: "100%",
     marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
@@ -44,26 +43,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#666",
   },
-  timestamp: {
+  section: {
     fontSize: 10,
     color: "#888",
-  },
-  postText: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  actionsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 8,
-  },
-  actionButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  actionText: {
-    marginLeft: 6,
-    color: "#555",
   },
 });
 
