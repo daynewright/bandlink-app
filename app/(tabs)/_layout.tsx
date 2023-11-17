@@ -1,13 +1,9 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
-
+import { Tabs, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-
 import Colors from "@/constants/Colors";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -36,7 +32,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(chat)"
+        name="(chat)/(topTabs)"
         options={{
           headerTitle: "Chat",
           tabBarLabel: "Chat",
@@ -52,6 +48,37 @@ export default function TabLayout() {
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      {/* HIDDEN SCREENS FROM MAIN NAV */}
+      <Tabs.Screen
+        name="(chat)/direct/[id]"
+        options={{
+          headerTitle: "Direct Chat",
+          href: null,
+          headerLeft: () => (
+            <Ionicons
+              size={24}
+              name="chevron-back"
+              style={{ marginLeft: 10, fontWeight: "bold" }}
+              onPress={() => router.push("/(tabs)/(chat)/(topTabs)/direct")}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(chat)/group/[id]"
+        options={{
+          headerTitle: "Group Chat",
+          href: null,
+          headerLeft: () => (
+            <Ionicons
+              size={24}
+              name="chevron-back"
+              style={{ marginLeft: 10, fontWeight: "bold" }}
+              onPress={() => router.push("/(tabs)/(chat)/(topTabs)/group")}
+            />
           ),
         }}
       />

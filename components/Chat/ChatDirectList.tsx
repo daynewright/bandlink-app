@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
-import { FlatList, ListRenderItem, View } from "react-native";
+import { FlatList, ListRenderItem, Pressable, View } from "react-native";
 import bandEvents from "@/mockData/events";
 
 import ChatDirectPreviewCard from "@/components/Chat/ChatDirectPreviewCard";
 import { BandEvent } from "@/types/events";
+import { Link } from "expo-router";
 
 const ChatDirectList = () => {
   const eventListRef = useRef<FlatList>(null);
@@ -17,14 +18,18 @@ const ChatDirectList = () => {
 
   const RenderFeedItem: ListRenderItem<any> = ({ item }) => {
     return (
-      <ChatDirectPreviewCard
-        sender="Johnny Joe"
-        message="Yo how is it going?"
-        avatar={`https://picsum.photos/${
-          Math.floor(Math.random() * 40) + 1
-        }/200`}
-        time="8:13pm"
-      />
+      <Link href="/direct/45" asChild>
+        <Pressable>
+          <ChatDirectPreviewCard
+            sender="Johnny Joe"
+            message="Yo how is it going?"
+            avatar={`https://picsum.photos/${
+              Math.floor(Math.random() * 40) + 1
+            }/200`}
+            time="8:13pm"
+          />
+        </Pressable>
+      </Link>
     );
   };
 
