@@ -11,6 +11,7 @@ import EventAttendeesSection from "@/components/Event/EventAttendeesSection";
 import EventFileSection from "@/components/Event/EventFileSection";
 import EventPhotoSection from "@/components/Event/EventPhotosSection";
 import EventCommentSection from "@/components/Event/EventCommentSection";
+import useGetUsers from "@/mockData/userGetUsers";
 
 const eventData = {
   title: "Upper Class Band Reception",
@@ -51,6 +52,8 @@ const EventDetailsPage = ({ event = eventData }) => {
   const readableDate = (timestamp: string) =>
     getReadableDateFrom(timestamp).readableDate;
 
+  const users = useGetUsers(10);
+
   return (
     <ScrollView style={defaultStyles.container}>
       {imageUri && (
@@ -82,29 +85,10 @@ const EventDetailsPage = ({ event = eventData }) => {
         </View>
         <EventTextSection text={event.about} expandable />
         <EventAttendeesSection
-          attendees={[
-            {
-              name: "John",
-            },
-            {
-              name: "Tom",
-            },
-            {
-              name: "Bill",
-            },
-            {
-              name: "Mark",
-            },
-            {
-              name: "Bobby",
-            },
-            {
-              name: "Jane",
-            },
-            {
-              name: "Zeen",
-            },
-          ]}
+          attendees={users.map((user) => ({
+            name: `${user.name.first} ${user.name.last}`,
+            avatar: user.picture.medium,
+          }))}
         />
         <EventCommentSection commentCount={10} />
         <EventFileSection

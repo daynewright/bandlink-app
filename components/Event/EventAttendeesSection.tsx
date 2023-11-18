@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { primary } from "@/constants/Colors";
 import { Link } from "expo-router";
@@ -7,6 +7,7 @@ import { Link } from "expo-router";
 type Props = {
   attendees: {
     name: string;
+    avatar?: string;
   }[];
 };
 
@@ -23,9 +24,16 @@ const EventAttendeesSection = ({ attendees }: Props) => {
             <View style={styles.avatarContainer}>
               {attendees.slice(0, maxDisplay).map((attendee, index) => (
                 <View key={index} style={styles.avatarWrapper}>
-                  <Text style={styles.avatarText}>
-                    {attendee.name.charAt(0)}
-                  </Text>
+                  {attendee.avatar ? (
+                    <Image
+                      source={{ uri: attendee.avatar }}
+                      style={styles.avatarImage}
+                    />
+                  ) : (
+                    <Text style={styles.avatarText}>
+                      {attendee.name.charAt(0)}
+                    </Text>
+                  )}
                 </View>
               ))}
               {additionalCount > 0 && (
@@ -78,6 +86,11 @@ const styles = StyleSheet.create({
   avatarText: {
     color: primary.white,
     fontWeight: "bold",
+  },
+  avatarImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 15,
   },
   overlayWrapper: {
     width: 30,
