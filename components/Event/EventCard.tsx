@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { primary } from "@/constants/Colors";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 
@@ -50,39 +50,41 @@ const EventCard = ({ event }: { event: BandEvent }) => {
     getReadableDateFrom(timeString).readableDate;
 
   return (
-    <View style={styles.card}>
-      {imageUri && (
-        <Image
-          source={{ uri: imageUri }}
-          style={styles.image}
-          resizeMode="cover"
-        />
-      )}
-      <EventPills pills={pills} />
-      <Link href="/(subpages)/event/123">
-        <View style={styles.textSection}>
-          {user && (
-            <EventUserProfile
-              username={`${user.name.first} ${user.name.last}`}
-              avatarUri={user.picture.medium}
-              headline="title"
+    <Link href="/(subpages)/event/123" asChild>
+      <Pressable>
+        <View style={styles.card}>
+          {imageUri && (
+            <Image
+              source={{ uri: imageUri }}
+              style={styles.image}
+              resizeMode="cover"
             />
           )}
-          <Text style={styles.dateText}>{readableDate(startTime)}</Text>
-          <Text style={styles.timeText}>
-            Time: {readableTime(startTime)} to {readableTime(endTime)}
-          </Text>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description}>{description}</Text>
-          <View style={styles.details}>
-            <Text>Location: {location.name}</Text>
-            <Text>Type: {eventType}</Text>
-            <Text>Organizer: {organizerGroup}</Text>
+          <EventPills pills={pills} />
+          <View style={styles.textSection}>
+            {user && (
+              <EventUserProfile
+                username={`${user.name.first} ${user.name.last}`}
+                avatarUri={user.picture.medium}
+                headline="title"
+              />
+            )}
+            <Text style={styles.dateText}>{readableDate(startTime)}</Text>
+            <Text style={styles.timeText}>
+              Time: {readableTime(startTime)} to {readableTime(endTime)}
+            </Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.description}>{description}</Text>
+            <View style={styles.details}>
+              <Text>Location: {location.name}</Text>
+              <Text>Type: {eventType}</Text>
+              <Text>Organizer: {organizerGroup}</Text>
+            </View>
           </View>
+          <EventActionRow />
         </View>
-      </Link>
-      <EventActionRow />
-    </View>
+      </Pressable>
+    </Link>
   );
 };
 
