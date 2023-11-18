@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 type Props = {
   group: string;
-  memberCount: string;
+  memberCount?: string;
   time: string;
   avatar?: string;
 };
@@ -45,8 +45,12 @@ const ChatGroupPreviewCard = ({ group, time, memberCount, avatar }: Props) => {
         <Text style={styles.sender}>{group}</Text>
         <Text style={styles.message}>{time}</Text>
       </View>
-      <Text style={styles.count}>{memberCount}</Text>
-      <Ionicons name="person-add-outline" />
+      {memberCount && (
+        <>
+          <Text style={styles.count}>{memberCount}</Text>
+          <Ionicons name="person-add-outline" />
+        </>
+      )}
     </View>
   );
 };

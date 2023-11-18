@@ -10,6 +10,7 @@ import EventStaticMap from "@/components/Event/EventStaticMap";
 import EventAttendeesSection from "@/components/Event/EventAttendeesSection";
 import EventFileSection from "@/components/Event/EventFileSection";
 import EventPhotoSection from "@/components/Event/EventPhotosSection";
+import EventCommentSection from "@/components/Event/EventCommentSection";
 
 const eventData = {
   title: "Upper Class Band Reception",
@@ -79,6 +80,7 @@ const EventDetailsPage = ({ event = eventData }) => {
             <Text>Organizer: {organizerGroup}</Text>
           </View>
         </View>
+        <EventTextSection text={event.about} expandable />
         <EventAttendeesSection
           attendees={[
             {
@@ -104,7 +106,7 @@ const EventDetailsPage = ({ event = eventData }) => {
             },
           ]}
         />
-        <EventTextSection text={event.about} expandable />
+        <EventCommentSection commentCount={10} />
         <EventFileSection
           files={[
             {

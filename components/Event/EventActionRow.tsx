@@ -16,7 +16,7 @@ const EventActionRow = () => {
         style={styles.actionButton}
         onPress={() => router.push("/(subpages)/event/123/comments")}
       >
-        <Ionicons name="chatbox-outline" size={20} />
+        <Ionicons name="chatbubbles-outline" size={20} />
         <Text style={styles.actionText}>10</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionButton}>

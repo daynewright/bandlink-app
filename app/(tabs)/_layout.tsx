@@ -37,7 +37,7 @@ export default function TabLayout() {
           headerTitle: "Chat",
           tabBarLabel: "Chat",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="chatbox-outline" color={color} size={size} />
+            <Ionicons name="md-chatbubble-outline" color={color} size={size} />
           ),
         }}
       />
