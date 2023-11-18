@@ -1,5 +1,4 @@
-// EventDetailsPage.js
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import EventUserProfile from "@/components/Profile/UserChicklet";
@@ -7,6 +6,8 @@ import EventPills from "@/components/Event/EventPills";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
 import EventTextSection from "@/components/Event/EventTextSection";
+import EventStaticMap from "@/components/Event/EventStaticMap";
+import EventAttendeesSection from "@/components/Event/EventAttendeesSection";
 
 const eventData = {
   title: "Upper Class Band Reception",
@@ -42,12 +43,6 @@ const EventDetailsPage = ({ event = eventData }) => {
     imageUri,
     pills,
   } = event;
-  const [expanded, setExpanded] = useState(false);
-
-  const toggleExpansion = () => {
-    setExpanded(!expanded);
-  };
-
   const readableTime = (timestamp: string) =>
     getReadableDateFrom(timestamp).readableTime;
   const readableDate = (timestamp: string) =>
@@ -82,6 +77,32 @@ const EventDetailsPage = ({ event = eventData }) => {
             <Text>Organizer: {organizerGroup}</Text>
           </View>
         </View>
+        <EventAttendeesSection
+          attendees={[
+            {
+              name: "John",
+            },
+            {
+              name: "Tom",
+            },
+            {
+              name: "Bill",
+            },
+            {
+              name: "Mark",
+            },
+            {
+              name: "Bobby",
+            },
+            {
+              name: "Jane",
+            },
+            {
+              name: "Zeen",
+            },
+          ]}
+        />
+        {/* <EventStaticMap /> */}
         <EventTextSection text={event.about} expandable />
       </View>
     </ScrollView>
