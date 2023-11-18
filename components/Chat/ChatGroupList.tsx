@@ -18,7 +18,7 @@ const ChatDirectList = () => {
 
   const RenderFeedItem: ListRenderItem<any> = ({ item }) => {
     return (
-      <Link href="/(modals)/chat/group/34" asChild>
+      <Link href="/(subpages)/chat/group/34" asChild>
         <Pressable>
           <ChatGroupPreviewCard
             group="Winterguard"

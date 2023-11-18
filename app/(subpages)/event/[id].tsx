@@ -15,7 +15,7 @@ import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
 
 const eventData = {
-  title: "Marching Band Practice",
+  title: "Upper Class Band Reception",
   description: "Regular practice session for the marching band.",
   location: {
     name: "Football Field",
@@ -32,7 +32,7 @@ const eventData = {
   imageUri: `https://picsum.photos/id/${
     Math.floor(Math.random() * 40) + 1
   }/600/800`,
-  pills: ["Concert", "Outdoor"],
+  pills: ["Seniors", "Juniors"],
 };
 
 const EventDetailsPage = ({ event = eventData }) => {

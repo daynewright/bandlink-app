@@ -59,7 +59,7 @@ const EventCard = ({ event }: { event: BandEvent }) => {
         />
       )}
       <EventPills pills={pills} />
-      <Link href="/(modals)/event/123">
+      <Link href="/(subpages)/event/123">
         <View style={styles.textSection}>
           {user && (
             <EventUserProfile
