@@ -8,6 +8,8 @@ import { defaultStyles } from "@/constants/Styles";
 import EventTextSection from "@/components/Event/EventTextSection";
 import EventStaticMap from "@/components/Event/EventStaticMap";
 import EventAttendeesSection from "@/components/Event/EventAttendeesSection";
+import EventFileSection from "@/components/Event/EventFileSection";
+import EventPhotoSection from "@/components/Event/EventPhotosSection";
 
 const eventData = {
   title: "Upper Class Band Reception",
@@ -102,8 +104,44 @@ const EventDetailsPage = ({ event = eventData }) => {
             },
           ]}
         />
-        {/* <EventStaticMap /> */}
         <EventTextSection text={event.about} expandable />
+        <EventFileSection
+          files={[
+            {
+              name: "Signup Form",
+              link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            },
+            {
+              name: "Flag Flyer",
+              link: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            },
+          ]}
+        />
+        <EventPhotoSection
+          photos={[
+            {
+              uri: `https://picsum.photos/id/${
+                Math.floor(Math.random() * 40) + 1
+              }/600/800`,
+            },
+            {
+              uri: `https://picsum.photos/id/${
+                Math.floor(Math.random() * 40) + 1
+              }/600/800`,
+            },
+            {
+              uri: `https://picsum.photos/id/${
+                Math.floor(Math.random() * 40) + 1
+              }/600/800`,
+            },
+            {
+              uri: `https://picsum.photos/id/${
+                Math.floor(Math.random() * 40) + 1
+              }/600/800`,
+            },
+          ]}
+        />
+        {/* <EventStaticMap /> */}
       </View>
     </ScrollView>
   );
