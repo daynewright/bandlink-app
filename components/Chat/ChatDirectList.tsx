@@ -18,7 +18,7 @@ const ChatDirectList = () => {
 
   const RenderFeedItem: ListRenderItem<any> = ({ item }) => {
     return (
-      <Link href="/direct/45" asChild>
+      <Link href="/(modals)/chat/direct/32" asChild>
         <Pressable>
           <ChatDirectPreviewCard
             sender="Johnny Joe"

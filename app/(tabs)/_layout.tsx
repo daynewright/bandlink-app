@@ -32,7 +32,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="(chat)/(topTabs)"
+        name="chat"
         options={{
           headerTitle: "Chat",
           tabBarLabel: "Chat",
@@ -48,37 +48,6 @@ export default function TabLayout() {
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle-outline" color={color} size={size} />
-          ),
-        }}
-      />
-      {/* HIDDEN SCREENS FROM MAIN NAV */}
-      <Tabs.Screen
-        name="(chat)/direct/[id]"
-        options={{
-          headerTitle: "Direct Chat",
-          href: null,
-          headerLeft: () => (
-            <Ionicons
-              size={24}
-              name="chevron-back"
-              style={{ marginLeft: 10, fontWeight: "bold" }}
-              onPress={() => router.push("/(tabs)/(chat)/(topTabs)/direct")}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="(chat)/group/[id]"
-        options={{
-          headerTitle: "Group Chat",
-          href: null,
-          headerLeft: () => (
-            <Ionicons
-              size={24}
-              name="chevron-back"
-              style={{ marginLeft: 10, fontWeight: "bold" }}
-              onPress={() => router.push("/(tabs)/(chat)/(topTabs)/group")}
-            />
           ),
         }}
       />
