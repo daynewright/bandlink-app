@@ -2,15 +2,20 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { primary } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text } from "@/components/utils/Themed";
+import { useRouter } from "expo-router";
 
 const EventActionRow = () => {
+  const router = useRouter();
   return (
     <View style={styles.actionsContainer}>
       <TouchableOpacity style={styles.actionButton}>
         <Ionicons name="person-add-outline" size={20} />
         <Text style={styles.actionText}>5</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.actionButton}>
+      <TouchableOpacity
+        style={styles.actionButton}
+        onPress={() => router.push("/(subpages)/event/123/comments")}
+      >
         <Ionicons name="chatbox-outline" size={20} />
         <Text style={styles.actionText}>10</Text>
       </TouchableOpacity>

@@ -1,18 +1,12 @@
 // EventDetailsPage.js
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import EventUserProfile from "@/components/Profile/UserChicklet";
 import EventPills from "@/components/Event/EventPills";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
+import EventTextSection from "@/components/Event/EventTextSection";
 
 const eventData = {
   title: "Upper Class Band Reception",
@@ -88,22 +82,7 @@ const EventDetailsPage = ({ event = eventData }) => {
             <Text>Organizer: {organizerGroup}</Text>
           </View>
         </View>
-
-        <View style={styles.textSection}>
-          <Text style={styles.aboutTitle}>About the Event</Text>
-          <Text numberOfLines={expanded ? 0 : 3} style={styles.aboutText}>
-            {event.about}
-          </Text>
-          {!expanded ? (
-            <TouchableOpacity onPress={toggleExpansion}>
-              <Text style={styles.readMoreButton}>Read More</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={toggleExpansion}>
-              <Text style={styles.readMoreButton}>Read Less</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+        <EventTextSection text={event.about} expandable />
       </View>
     </ScrollView>
   );
@@ -153,24 +132,6 @@ const styles = StyleSheet.create({
     color: primary.darkgrey,
     fontSize: 10,
     paddingHorizontal: 10,
-  },
-  aboutTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  aboutText: {
-    fontSize: 14,
-    color: "grey",
-    marginTop: 5,
-  },
-  readMoreButton: {
-    color: primary.orange,
-    textDecorationLine: "underline",
-    marginTop: 5,
-  },
-  textSection: {
-    padding: 10,
   },
 });
 
