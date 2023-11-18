@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import { primary } from "@/constants/Colors";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 
@@ -9,6 +9,7 @@ import EventActionRow from "@/components/Event/EventActionRow";
 
 import { BandEvent } from "@/types/events";
 import { UserInfo } from "@/types/user";
+import { Link } from "expo-router";
 
 const EventCard = ({ event }: { event: BandEvent }) => {
   const {
@@ -58,26 +59,28 @@ const EventCard = ({ event }: { event: BandEvent }) => {
         />
       )}
       <EventPills pills={pills} />
-      <View style={styles.textSection}>
-        {user && (
-          <EventUserProfile
-            username={`${user.name.first} ${user.name.last}`}
-            avatarUri={user.picture.medium}
-            headline="title"
-          />
-        )}
-        <Text style={styles.dateText}>{readableDate(startTime)}</Text>
-        <Text style={styles.timeText}>
-          Time: {readableTime(startTime)} to {readableTime(endTime)}
-        </Text>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-        <View style={styles.details}>
-          <Text>Location: {location.name}</Text>
-          <Text>Type: {eventType}</Text>
-          <Text>Organizer: {organizerGroup}</Text>
+      <Link href="/(modals)/event/123">
+        <View style={styles.textSection}>
+          {user && (
+            <EventUserProfile
+              username={`${user.name.first} ${user.name.last}`}
+              avatarUri={user.picture.medium}
+              headline="title"
+            />
+          )}
+          <Text style={styles.dateText}>{readableDate(startTime)}</Text>
+          <Text style={styles.timeText}>
+            Time: {readableTime(startTime)} to {readableTime(endTime)}
+          </Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.description}>{description}</Text>
+          <View style={styles.details}>
+            <Text>Location: {location.name}</Text>
+            <Text>Type: {eventType}</Text>
+            <Text>Organizer: {organizerGroup}</Text>
+          </View>
         </View>
-      </View>
+      </Link>
       <EventActionRow />
     </View>
   );
