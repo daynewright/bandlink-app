@@ -57,6 +57,10 @@ function RootLayoutNav() {
           name="(subpages)/index"
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="(modals)/profile"
+          options={{ presentation: "modal", headerShown: false }}
+        />
       </Stack>
     </ThemeProvider>
   );

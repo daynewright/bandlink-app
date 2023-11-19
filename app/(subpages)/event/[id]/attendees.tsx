@@ -3,29 +3,33 @@ import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
 import useGetUsers from "@/mockData/userGetUsers";
 import { UserInfo } from "@/types/user";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, TextInput } from "react-native";
 
 const UserList = () => {
   // TODO: fix this mock data.  Pass it in? Use reactQuery?
-  const users = useGetUsers(10);
+  const users = useGetUsers(35);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState<UserInfo[]>(users);
+  const [filtered, setFilteredUsers] = useState<UserInfo[]>(users);
+
+  useEffect(() => {
+    if (users.length > 0) {
+      setFilteredUsers(users);
+    }
+  }, [users.length]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
 
-    const sourceArray = query.length > 0 ? users : users;
-
     const filtered =
       query.length > 0
-        ? sourceArray?.filter(
+        ? users?.filter(
             (user: UserInfo) =>
               user.name.first.toLowerCase().includes(query.toLowerCase()) ||
               user.name.last.toLowerCase().includes(query.toLowerCase())
           )
-        : sourceArray;
+        : users;
 
     setFilteredUsers(filtered);
   };
@@ -39,8 +43,8 @@ const UserList = () => {
         onChangeText={handleSearch}
       />
       <FlatList
-        data={filteredUsers}
-        keyExtractor={(item) => item.id.toString()}
+        data={filtered}
+        keyExtractor={(item) => item.cell.toString()}
         renderItem={({ item }) => (
           <View style={styles.userContainer}>
             <UserChicklet

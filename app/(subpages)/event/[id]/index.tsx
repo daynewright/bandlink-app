@@ -52,7 +52,7 @@ const EventDetailsPage = ({ event = eventData }) => {
   const readableDate = (timestamp: string) =>
     getReadableDateFrom(timestamp).readableDate;
 
-  const users = useGetUsers(10);
+  const users = useGetUsers(35);
 
   return (
     <ScrollView style={defaultStyles.container}>

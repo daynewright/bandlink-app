@@ -17,7 +17,7 @@ const useGetUsers = (count: number) => {
       }
     };
 
-    if (!users) {
+    if (!users?.length) {
       getUser();
     }
   }, [users]);

@@ -1,5 +1,6 @@
+import { useRouter } from "expo-router";
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 type Props = {
   username: string;
@@ -8,15 +9,19 @@ type Props = {
 };
 
 const UserChicklet = ({ username, avatarUri, headline }: Props) => {
+  const router = useRouter();
+
   return (
-    <View style={styles.userInfoContainer}>
-      <Image source={{ uri: avatarUri }} style={styles.avatar} />
-      <View style={styles.userInfo}>
-        <Text style={styles.name}>{username}</Text>
-        <Text style={styles.headline}>{headline}</Text>
-        <Text style={styles.section}>Section - Role</Text>
+    <TouchableOpacity onPress={() => router.push("/(modals)/profile")}>
+      <View style={styles.userInfoContainer}>
+        <Image source={{ uri: avatarUri }} style={styles.avatar} />
+        <View style={styles.userInfo}>
+          <Text style={styles.name}>{username}</Text>
+          <Text style={styles.headline}>{headline}</Text>
+          <Text style={styles.section}>Section - Role</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
