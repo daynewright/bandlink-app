@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { Link } from "expo-router";
 import { View } from "@/components/utils/Themed";
 
 import EventList from "@/components/Event/EventList";
@@ -8,7 +7,6 @@ export default function Feed() {
   return (
     <View style={styles.container}>
       <EventList />
-      <Link href="/(modals)/login">Login</Link>
     </View>
   );
 }

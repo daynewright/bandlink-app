@@ -1,17 +1,14 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { UserInfo } from "@/types/user";
+import { useRouter } from "expo-router";
+
 import useGetUsers from "@/mockData/userGetUsers";
 import { defaultStyles } from "@/constants/Styles";
 import { primary } from "@/constants/Colors";
 
-type ProfileProps = {
-  user: UserInfo;
-  onMessagePress: () => void;
-};
-
-const UserProfile = ({ onMessagePress }: ProfileProps) => {
+const UserProfile = () => {
+  const router = useRouter();
   const userData = useGetUsers(1);
   const user = {
     ...userData[0],
@@ -28,6 +25,10 @@ const UserProfile = ({ onMessagePress }: ProfileProps) => {
   if (!user.name) {
     return null;
   }
+
+  const onMessagePress = () => {
+    router.replace("/(subpages)/chat/direct/45");
+  };
 
   return (
     <View style={[defaultStyles.container, styles.container]}>

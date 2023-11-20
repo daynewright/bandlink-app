@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { FlatList, ListRenderItem, Pressable, View } from "react-native";
+import { Link } from "expo-router";
 import bandEvents from "@/mockData/events";
 
 import ChatDirectPreviewCard from "@/components/Chat/ChatDirectPreviewCard";
 import { BandEvent } from "@/types/events";
-import { Link } from "expo-router";
 
 const ChatDirectList = () => {
   const eventListRef = useRef<FlatList>(null);
