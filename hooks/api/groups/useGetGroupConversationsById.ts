@@ -12,7 +12,7 @@ export const useGetGroupConversationsById = (
 
   const queryFn = async () => {
     return await supabase.rpc("get_messages_by_conversation_group", {
-      p_user_id: data?.user?.id,
+      p_user_id: data?.id,
     });
   };
 

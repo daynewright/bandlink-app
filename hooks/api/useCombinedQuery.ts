@@ -1,27 +1,26 @@
-import { PostgrestError } from "@supabase/supabase-js";
-import { QueryFunction, useQuery } from "@tanstack/react-query";
+import { PostgrestError, AuthError } from "@supabase/supabase-js";
+import { QueryFunction, useQuery, QueryKey } from "@tanstack/react-query";
 
-type Props = {
-  queryKey: (string | undefined)[];
-  queryFn:
-    | QueryFunction<
-        | {
-            data: any[] | null;
-            error: PostgrestError | null;
-          }
-        | {
-            data: null;
-            error: unknown;
-          },
-        (string | undefined)[],
-        never
-      >
-    | undefined;
+type Props<TData> = {
+  queryKey: QueryKey;
+  queryFn: QueryFunction<
+    { data: TData | null; error: PostgrestError | AuthError | null },
+    QueryKey,
+    never
+  >;
   enabled?: boolean;
 };
-// Returns react-query & supabase data/errors //
-export const useCombinedQuery = ({ queryKey, queryFn, enabled }: Props) => {
-  const { data, error, ...rest } = useQuery({ queryKey, queryFn, enabled });
+
+export const useCombinedQuery = <TData>({
+  queryKey,
+  queryFn,
+  enabled,
+}: Props<TData>) => {
+  const { data, error, ...rest } = useQuery({
+    queryKey,
+    queryFn,
+    enabled,
+  });
 
   return {
     data: data?.data,

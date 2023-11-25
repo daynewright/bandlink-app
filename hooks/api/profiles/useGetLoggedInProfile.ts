@@ -1,12 +1,13 @@
 import { supabase } from "@/clients/supabase";
-import { User } from "@supabase/supabase-js";
+import { AuthError, PostgrestError, User } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { useCombinedQuery } from "../useCombinedQuery";
+import { Row } from "@/types/supabase";
 
 export const useGetLoggedInProfile = () => {
   const [localUser, setLocalUser] = useState<{
     data: User | undefined;
-    error: Error | undefined;
+    error: PostgrestError | AuthError | undefined;
   }>();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export const useGetLoggedInProfile = () => {
       .select("*")
       .eq("auth_user_id", localUser?.data?.id)
       .limit(1)
-      .single();
+      .returns<Row<"users_profile">>();
 
     return { data, error };
   };
