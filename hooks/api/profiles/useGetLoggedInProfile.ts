@@ -2,7 +2,7 @@ import { supabase } from "@/clients/supabase";
 import { AuthError, PostgrestError, User } from "@supabase/supabase-js";
 import { useState, useEffect } from "react";
 import { useCombinedQuery } from "../useCombinedQuery";
-import { Row } from "@/types/supabase";
+import { Row } from "@/types";
 
 export const useGetLoggedInProfile = () => {
   const [localUser, setLocalUser] = useState<{

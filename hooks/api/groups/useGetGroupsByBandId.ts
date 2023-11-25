@@ -1,6 +1,6 @@
 import { supabase } from "@/clients/supabase";
 import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
-import { Row } from "@/types/supabase";
+import { Row } from "@/types";
 
 export const useGetGroupsByBandId = (bandId: string) => {
   const queryKey = ["groups"];
