@@ -4,11 +4,10 @@ import { Link } from "expo-router";
 import bandEvents from "@/mockData/events";
 
 import ChatDirectPreviewCard from "@/components/Chat/ChatDirectPreviewCard";
-import { BandEvent } from "@/types/events";
 
 const ChatDirectList = () => {
   const eventListRef = useRef<FlatList>(null);
-  const [events, setEvents] = useState<BandEvent[]>([]);
+  const [events, setEvents] = useState<any>([]);
 
   useEffect(() => {
     if (!events.length) {

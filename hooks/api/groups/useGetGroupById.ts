@@ -2,8 +2,8 @@ import { supabase } from "@/clients/supabase";
 import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
 import { Row } from "@/types";
 
-export const useGetGroupById = (groupId: string) => {
-  const queryKey = ["groups"];
+export const useGetGroupById = (groupId?: string) => {
+  const queryKey = ["groups", groupId];
 
   const queryFn = async () => {
     return await supabase
@@ -14,5 +14,9 @@ export const useGetGroupById = (groupId: string) => {
       .single();
   };
 
-  return useCombinedQuery<Row<"groups">>({ queryKey, queryFn });
+  return useCombinedQuery<Row<"groups">>({
+    queryKey,
+    queryFn,
+    enabled: !!groupId,
+  });
 };

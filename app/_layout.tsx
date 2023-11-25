@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SplashScreen, Stack } from "expo-router";
+import { Slot, SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 
 export {
@@ -63,6 +63,12 @@ function RootLayoutNav() {
           <Stack.Screen
             name="(modals)/profile"
             options={{ presentation: "modal", headerShown: false }}
+          />
+          <Stack.Screen
+            name="(modals)/login"
+            options={{
+              presentation: "modal",
+            }}
           />
         </Stack>
       </QueryClientProvider>

@@ -1,14 +1,32 @@
-import { StyleSheet } from "react-native";
-
+import {
+  ActivityIndicator,
+  Alert,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { defaultStyles } from "@/constants/Styles";
 import { Text, View } from "@/components/utils/Themed";
-
-import { useGetBandById } from "@/hooks/api";
+import { supabase } from "@/clients/supabase";
+import { Redirect } from "expo-router";
+import { useGetLoggedInUser } from "@/hooks/useGetLoggedInUser";
+import { useGetLoggedInProfile } from "@/hooks/api";
+import { useGetGroupsByUserId } from "@/hooks/api/groups/useGetGroupsByUserId";
 
 export default function Profile() {
-  // const { data, error } = useGetBands();
-  const { data, error } = useGetBandById(
-    "9bebd8a9-1354-459a-81a8-45dd9150e665"
+  const { authUser, isLoading } = useGetLoggedInUser();
+
+  const { data: loggedInUserProfile } = useGetLoggedInProfile();
+  const { data: loggedInUserGroups } = useGetGroupsByUserId(
+    loggedInUserProfile?.id
   );
+
+  // const loggedInUserProfile = useProfileStore((state) =>
+  //   state.profiles.find((p) => p.auth_user_id === authUser?.id)
+  // );
+
+  // const { data, error } = useGetBandById(
+  //   "9bebd8a9-1354-459a-81a8-45dd9150e665"
+  // );
 
   // const { data, error } = useGetGroupById(
   //   "9ed61ea1-a7d3-47fa-808a-25162973e3df"
@@ -18,18 +36,30 @@ export default function Profile() {
   //   "9bebd8a9-1354-459a-81a8-45dd9150e665"
   // );
 
-  // const { data, error } = useGetLoggedInProfile();
+  // const { data: groups, error } = useGetGroupsByUserId(profile?.id!);
 
-  console.log(JSON.stringify(data, null, 2));
-  console.log(JSON.stringify(error, null, 2));
+  // console.log(JSON.stringify(error, null, 2));
+
+  const logoutUser = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) Alert.alert(error.message);
+  };
+
+  if (!authUser && !isLoading) {
+    return <Redirect href="/(modals)/login" />;
+  }
+
+  if (isLoading) {
+    return <ActivityIndicator size="large" />;
+  }
 
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
-      <Text>{data?.description}</Text>
-
-      <Text>{JSON.stringify({ data }, null, 2)}</Text>
-      <Text>{JSON.stringify({ error }, null, 2)}</Text>
+      <Text>{JSON.stringify(loggedInUserProfile, null, 2)}</Text>
+      <Text>{JSON.stringify(loggedInUserGroups, null, 2)}</Text>
+      <TouchableOpacity style={defaultStyles.btn} onPress={logoutUser}>
+        <Text style={defaultStyles.btnText}>Log out</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -37,12 +67,8 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+    paddingHorizontal: 20,
   },
   separator: {
     marginVertical: 30,

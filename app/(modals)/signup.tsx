@@ -1,14 +1,15 @@
+import { TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 import { Text, View } from "@/components/utils/Themed";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
-import { useRouter } from "expo-router";
-import { TextInput, TouchableOpacity } from "react-native";
 
 export default function SignUp() {
   const router = useRouter();
 
   return (
-    <View style={defaultStyles.container}>
+    <View style={[defaultStyles.container, styles.container]}>
+      <Text style={styles.h1}>Bandlink</Text>
       <TextInput
         autoCapitalize="none"
         placeholder="First name"
@@ -46,3 +47,14 @@ export default function SignUp() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  h1: {
+    fontSize: 34,
+    marginBottom: 10,
+  },
+});
