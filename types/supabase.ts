@@ -11,24 +11,35 @@ export interface Database {
     Tables: {
       bands: {
         Row: {
+          band_image_id: string | null
           created_at: string
           description: string | null
           id: string
           name: string
         }
         Insert: {
+          band_image_id?: string | null
           created_at?: string
           description?: string | null
           id?: string
           name: string
         }
         Update: {
+          band_image_id?: string | null
           created_at?: string
           description?: string | null
           id?: string
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "bands_band_image_id_fkey"
+            columns: ["band_image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       conversations: {
         Row: {
