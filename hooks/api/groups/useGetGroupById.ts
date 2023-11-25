@@ -2,17 +2,17 @@ import { supabase } from "@/clients/supabase";
 import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
 import { Row } from "@/types";
 
-export const useGetProfileById = (id: string) => {
-  const queryKey = ["profiles", id];
+export const useGetGroupById = (groupId: string) => {
+  const queryKey = ["groups"];
 
   const queryFn = async () => {
     return await supabase
-      .from("users_profile")
+      .from("groups")
       .select("*")
-      .eq("id", id)
+      .eq("id", groupId)
       .limit(1)
       .single();
   };
 
-  return useCombinedQuery<Row<"users_profile">>({ queryKey, queryFn });
+  return useCombinedQuery<Row<"groups">>({ queryKey, queryFn });
 };

@@ -1,2 +1,2 @@
-export * from "./useGetGroupConversationsById";
 export * from "./useGetGroupsByBandId";
+export * from "./useGetGroupById";

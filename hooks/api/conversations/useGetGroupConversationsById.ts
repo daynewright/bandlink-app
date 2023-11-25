@@ -11,7 +11,7 @@ export const useGetGroupConversationsById = (
   const queryKey = ["groups", groupId, "conversations", conversationId];
 
   const queryFn = async () => {
-    return await supabase.rpc("get_messages_by_conversation_group", {
+    return await supabase.rpc("", {
       p_user_id: data?.id,
     });
   };

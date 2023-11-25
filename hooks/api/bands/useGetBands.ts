@@ -6,8 +6,8 @@ export const useGetBands = () => {
   const queryKey = ["bands"];
 
   const queryFn = async () => {
-    return await supabase.from("bands").select("*").returns<Row<"bands">>();
+    return await supabase.from("bands").select("*");
   };
 
-  return useCombinedQuery({ queryKey, queryFn });
+  return useCombinedQuery<Row<"bands">[]>({ queryKey, queryFn });
 };

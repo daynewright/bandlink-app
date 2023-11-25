@@ -6,12 +6,8 @@ export const useGetGroupsByBandId = (bandId: string) => {
   const queryKey = ["groups"];
 
   const queryFn = async () => {
-    return await supabase
-      .from("groups")
-      .select("*")
-      .eq("band_id", bandId)
-      .returns<Row<"groups">>();
+    return await supabase.from("groups").select("*").eq("band_id", bandId);
   };
 
-  return useCombinedQuery({ queryKey, queryFn });
+  return useCombinedQuery<Row<"groups">[]>({ queryKey, queryFn });
 };

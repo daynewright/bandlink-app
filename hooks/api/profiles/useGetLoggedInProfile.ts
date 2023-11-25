@@ -39,10 +39,14 @@ export const useGetLoggedInProfile = () => {
       .select("*")
       .eq("auth_user_id", localUser?.data?.id)
       .limit(1)
-      .returns<Row<"users_profile">>();
+      .single();
 
     return { data, error };
   };
 
-  return useCombinedQuery({ queryKey, queryFn, enabled: !!localUser });
+  return useCombinedQuery<Row<"users_profile">>({
+    queryKey,
+    queryFn,
+    enabled: !!localUser,
+  });
 };
