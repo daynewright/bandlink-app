@@ -1,13 +1,14 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useEffect } from "react";
+import { useColorScheme } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { useFonts } from "expo-font";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
-import { useColorScheme } from "react-native";
+import { useFonts } from "expo-font";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,20 +49,23 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const queryClient = new QueryClient();
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(subpages)/index"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="(modals)/profile"
-          options={{ presentation: "modal", headerShown: false }}
-        />
-      </Stack>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(subpages)/index"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(modals)/profile"
+            options={{ presentation: "modal", headerShown: false }}
+          />
+        </Stack>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
