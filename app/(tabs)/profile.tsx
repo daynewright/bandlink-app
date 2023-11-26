@@ -11,6 +11,7 @@ import { Redirect } from "expo-router";
 import { useGetLoggedInUser } from "@/hooks/useGetLoggedInUser";
 import { useGetLoggedInProfile } from "@/hooks/api";
 import { useGetGroupsByUserId } from "@/hooks/api/groups/useGetGroupsByUserId";
+import { useGetEventsByGroupId } from "@/hooks/api/events/useGetEventsByGroupId";
 
 export default function Profile() {
   const { authUser, isLoading } = useGetLoggedInUser();
@@ -20,6 +21,11 @@ export default function Profile() {
     loggedInUserProfile?.id
   );
 
+  const { data: eventsByGroupId } = useGetEventsByGroupId(
+    "9ed61ea1-a7d3-47fa-808a-25162973e3df"
+  );
+
+  console.log(JSON.stringify(eventsByGroupId, null, 2));
   // const loggedInUserProfile = useProfileStore((state) =>
   //   state.profiles.find((p) => p.auth_user_id === authUser?.id)
   // );
@@ -55,8 +61,9 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(loggedInUserProfile, null, 2)}</Text>
-      <Text>{JSON.stringify(loggedInUserGroups, null, 2)}</Text>
+      {/* <Text>{JSON.stringify(loggedInUserProfile, null, 2)}</Text>
+      <Text>{JSON.stringify(loggedInUserGroups, null, 2)}</Text> */}
+      <Text>{JSON.stringify(eventsByGroupId, null, 2)}</Text>
       <TouchableOpacity style={defaultStyles.btn} onPress={logoutUser}>
         <Text style={defaultStyles.btnText}>Log out</Text>
       </TouchableOpacity>
