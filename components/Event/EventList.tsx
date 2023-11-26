@@ -3,12 +3,11 @@ import { FlatList, ListRenderItem, View } from "react-native";
 import bandEvents from "@/mockData/events";
 
 import EventCard from "@/components/Event/EventCard";
-import { BandEvent } from "@/types/events";
 import getRandomList from "@/mockData/getRandomList";
 
 const EventList = () => {
   const eventListRef = useRef<FlatList>(null);
-  const [events, setEvents] = useState<BandEvent[]>([]);
+  const [events, setEvents] = useState<any>([]);
 
   useEffect(() => {
     if (!events.length) {

@@ -8,24 +8,43 @@ import { defaultStyles } from "@/constants/Styles";
 import { Text, View } from "@/components/utils/Themed";
 import { supabase } from "@/clients/supabase";
 import { Redirect } from "expo-router";
-import { useGetLoggedInUser } from "@/hooks/useGetLoggedInUser";
-import { useGetLoggedInProfile } from "@/hooks/api";
-import { useGetGroupsByUserId } from "@/hooks/api/groups/useGetGroupsByUserId";
-import { useGetEventsByGroupId } from "@/hooks/api/events/useGetEventsByGroupId";
+
+import { useGetGroupsByUserId } from "@/hooks/api/groups";
+import {
+  useGetEventsByGroupId,
+  useGetSingleEventWithDetails,
+} from "@/hooks/api/events";
+import {
+  useGetLoggedInUser,
+  useGetLoggedInProfile,
+} from "@/hooks/api/profiles";
+import { useGetConversationByTypeId } from "@/hooks/api/conversations";
 
 export default function Profile() {
   const { authUser, isLoading } = useGetLoggedInUser();
 
-  const { data: loggedInUserProfile } = useGetLoggedInProfile();
-  const { data: loggedInUserGroups } = useGetGroupsByUserId(
-    loggedInUserProfile?.id
+  // const { data: loggedInUserProfile } = useGetLoggedInProfile();
+  // const { data: loggedInUserGroups } = useGetGroupsByUserId(
+  //   loggedInUserProfile?.id
+  // );
+
+  // const { data: eventsByGroupId } = useGetEventsByGroupId(
+  //   "9ed61ea1-a7d3-47fa-808a-25162973e3df"
+  // );
+
+  // const { data: convo, error } = useGetConversationByTypeId(
+  //   "USER",
+  //   "02035133-eb13-47c3-8e40-6664c7c335ef"
+  // );
+
+  const { data: event, error } = useGetSingleEventWithDetails(
+    "3cf2898f-1e80-43aa-a2d9-24d08f35bf10"
   );
 
-  const { data: eventsByGroupId } = useGetEventsByGroupId(
-    "9ed61ea1-a7d3-47fa-808a-25162973e3df"
-  );
+  console.log(JSON.stringify(event, null, 2));
+  console.log(JSON.stringify(error, null, 2));
 
-  console.log(JSON.stringify(eventsByGroupId, null, 2));
+  // console.log(JSON.stringify(eventsByGroupId, null, 2));
   // const loggedInUserProfile = useProfileStore((state) =>
   //   state.profiles.find((p) => p.auth_user_id === authUser?.id)
   // );
@@ -63,7 +82,7 @@ export default function Profile() {
     <View style={styles.container}>
       {/* <Text>{JSON.stringify(loggedInUserProfile, null, 2)}</Text>
       <Text>{JSON.stringify(loggedInUserGroups, null, 2)}</Text> */}
-      <Text>{JSON.stringify(eventsByGroupId, null, 2)}</Text>
+      <Text>{JSON.stringify(event, null, 2)}</Text>
       <TouchableOpacity style={defaultStyles.btn} onPress={logoutUser}>
         <Text style={defaultStyles.btnText}>Log out</Text>
       </TouchableOpacity>

@@ -65,7 +65,7 @@ const UserProfile = () => {
         <Text style={styles.sectionTitle}>Groups ({user.groups.length})</Text>
         {user.groups && user.groups.length > 0 ? (
           <View style={styles.pillContainer}>
-            {user.groups.map((group, index) => (
+            {user.groups.map((group: any, index: any) => (
               <View key={index} style={styles.pill}>
                 <Text style={styles.pillText}>{group.name}</Text>
               </View>

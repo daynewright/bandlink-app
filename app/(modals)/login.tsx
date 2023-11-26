@@ -6,7 +6,7 @@ import { Text, View } from "@/components/utils/Themed";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
 import { useState } from "react";
-import { useGetLoggedInUser } from "@/hooks/useGetLoggedInUser";
+import { useGetLoggedInUser } from "@/hooks/api/profiles/useGetLoggedInUser";
 
 export default function Login() {
   const [email, setEmail] = useState<string>();

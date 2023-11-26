@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { supabase } from "@/clients/supabase";
 import useAuthStore from "@/store/useAuthStore";
-import { useGetLoggedInProfile } from "./api";
+import { useGetLoggedInProfile } from "./useGetLoggedInProfile";
 
 export const useGetLoggedInUser = () => {
   const { authUser, isLoading, addUser, removeUser } = useAuthStore();

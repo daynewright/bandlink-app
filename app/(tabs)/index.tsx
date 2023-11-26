@@ -2,7 +2,7 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import { View } from "@/components/utils/Themed";
 
 import EventList from "@/components/Event/EventList";
-import { useGetLoggedInUser } from "@/hooks/useGetLoggedInUser";
+import { useGetLoggedInUser } from "@/hooks/api/profiles";
 import { Redirect } from "expo-router";
 
 export default function Feed() {

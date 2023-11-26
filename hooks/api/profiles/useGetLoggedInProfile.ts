@@ -1,6 +1,6 @@
 import { Row } from "@/types";
 import { supabase } from "@/clients/supabase";
-import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
+import { useCombinedQuery } from "@/hooks/api/utils";
 import useAuthStore from "@/store/useAuthStore";
 
 export const useGetLoggedInProfile = () => {

@@ -1,16 +1,18 @@
 import { supabase } from "@/clients/supabase";
-import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
+import { useCombinedQuery } from "@/hooks/api/utils";
 import { Row } from "@/types";
 
 type EventsData = Row<"events">[] | null;
 
+type QueryFnReturn = Promise<{
+  data: EventsData;
+  error: any;
+}>;
+
 export const useGetEventsByGroupId = (groupId?: string) => {
   const queryKey = ["events", groupId];
 
-  const queryFn = async (): Promise<{
-    data: EventsData;
-    error: any;
-  }> => {
+  const queryFn = async (): QueryFnReturn => {
     const { data, error } = await supabase
       .from("events_groups")
       .select(`events (*)`)

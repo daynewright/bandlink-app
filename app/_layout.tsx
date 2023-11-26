@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Slot, SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 
 export {

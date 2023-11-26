@@ -1,7 +1,6 @@
 import { supabase } from "@/clients/supabase";
-import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
-import { Row } from "@/types";
-import { useGetLoggedInProfile } from "../profiles";
+import { useCombinedQuery } from "@/hooks/api/utils";
+import { useGetLoggedInProfile } from "@/hooks/api/profiles";
 
 export const useGetBandForUser = () => {
   const { data: user } = useGetLoggedInProfile();

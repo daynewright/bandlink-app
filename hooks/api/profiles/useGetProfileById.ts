@@ -1,5 +1,5 @@
 import { supabase } from "@/clients/supabase";
-import { useCombinedQuery } from "@/hooks/api/useCombinedQuery";
+import { useCombinedQuery } from "@/hooks/api/utils";
 import { Row } from "@/types";
 
 export const useGetProfileById = (id: string) => {
