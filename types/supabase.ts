@@ -689,7 +689,6 @@ export interface Database {
       }
       get_events_for_user_in_band: {
         Args: {
-          p_user_id: string
           p_band_id: string
           p_page_number: number
           p_items_per_page: number
