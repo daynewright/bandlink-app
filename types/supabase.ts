@@ -687,6 +687,29 @@ export interface Database {
           created_at: string
         }[]
       }
+      get_conversations_for_group: {
+        Args: {
+          p_group_id: string
+        }
+        Returns: {
+          group_id: string
+          group_name: string
+          conversation_id: string
+          users_count: number
+          latest_message_date: string
+        }[]
+      }
+      get_conversations_for_user: {
+        Args: {
+          p_user_id: string
+        }
+        Returns: {
+          conversation_id: string
+          other_user_name: string
+          latest_message: string
+          latest_message_date: string
+        }[]
+      }
       get_events_for_user_in_band: {
         Args: {
           p_band_id: string
@@ -705,71 +728,42 @@ export interface Database {
           creator_name: string
           creator_picture: string
           attendees_count: number
-          conversation_count: number
+          messages_count: number
           group_names: string[]
         }[]
       }
-      get_messages_by_conversation_event: {
+      get_messages_for_conversation_group: {
+        Args: {
+          p_conversation_id: string
+          p_page_number: number
+          p_items_per_page: number
+        }
+        Returns: {
+          message_id: string
+          user_id: string
+          user_name: string
+          message: string
+          created_at: string
+        }[]
+      }
+      get_messages_for_event: {
         Args: {
           p_event_id: string
-          p_user_id: string
-          p_page_size: number
           p_page_number: number
+          p_items_per_page: number
         }
         Returns: {
-          message_id: string
+          conversation_id: string
+          event_id: string
+          message: string
           sender_user_id: string
           sender_name: string
           sender_image_path: string
-          context: string
           file_name: string
           file_path: string
           image_name: string
           image_path: string
           created_at: string
-          is_from_user: boolean
-        }[]
-      }
-      get_messages_by_conversation_group: {
-        Args: {
-          p_group_id: string
-          p_user_id: string
-          p_page_size: number
-          p_page_number: number
-        }
-        Returns: {
-          message_id: string
-          sender_user_id: string
-          sender_name: string
-          sender_image_path: string
-          context: string
-          file_name: string
-          file_path: string
-          image_name: string
-          image_path: string
-          created_at: string
-          is_from_user: boolean
-        }[]
-      }
-      get_messages_by_conversations_user: {
-        Args: {
-          p_logged_in_user_id: string
-          p_other_user_id: string
-          p_page_size: number
-          p_page_number: number
-        }
-        Returns: {
-          message_id: string
-          other_user_id: string
-          other_user_name: string
-          other_user_image_path: string
-          context: string
-          file_name: string
-          file_path: string
-          image_name: string
-          image_path: string
-          created_at: string
-          is_from_logged_in_user: boolean
         }[]
       }
       get_single_event_with_details: {
@@ -785,37 +779,11 @@ export interface Database {
           end_time: string
           creator_user_id: string
           creator_name: string
-          creator_picture: Json
+          creator_picture: string
           attendees_count: number
-          attendees_info: Json[]
+          messages_count: number
           files: Json[]
           images: Json[]
-          conversations_count: number
-        }[]
-      }
-      get_user_conversations_by_group: {
-        Args: {
-          p_user_id: string
-        }
-        Returns: {
-          conversation_id: string
-          group_id: string
-          group_name: string
-          user_count: number
-          recent_message_created_at: string
-        }[]
-      }
-      get_user_conversations_by_user: {
-        Args: {
-          p_user_id: string
-        }
-        Returns: {
-          conversation_id: string
-          other_user_id: string
-          other_user_name: string
-          other_user_image_path: string
-          recent_message_text: string
-          recent_message_created_at: string
         }[]
       }
       get_users_for_event: {
