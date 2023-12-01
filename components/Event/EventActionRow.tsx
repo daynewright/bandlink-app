@@ -4,20 +4,26 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, Text } from "@/components/utils/Themed";
 import { useRouter } from "expo-router";
 
-const EventActionRow = () => {
+const EventActionRow = ({
+  attendanceCount = 0,
+  commentCount = 0,
+}: {
+  attendanceCount: number;
+  commentCount: number;
+}) => {
   const router = useRouter();
   return (
     <View style={styles.actionsContainer}>
       <TouchableOpacity style={styles.actionButton}>
         <Ionicons name="person-add-outline" size={20} />
-        <Text style={styles.actionText}>5</Text>
+        <Text style={styles.actionText}>{attendanceCount}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.actionButton}
         onPress={() => router.push("/(subpages)/event/123/comments")}
       >
         <Ionicons name="chatbubbles-outline" size={20} />
-        <Text style={styles.actionText}>10</Text>
+        <Text style={styles.actionText}>{commentCount}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.actionButton}>
         <Ionicons name="calendar-outline" size={20} color={primary.darkgrey} />

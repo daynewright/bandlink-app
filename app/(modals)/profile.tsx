@@ -3,47 +3,58 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 
-import useGetUsers from "@/mockData/userGetUsers";
 import { defaultStyles } from "@/constants/Styles";
 import { primary } from "@/constants/Colors";
+import { useGetProfileById } from "@/hooks/api/profiles";
 
 const UserProfile = () => {
-  const router = useRouter();
-  const userData = useGetUsers(1);
-  const user = {
-    ...userData[0],
-    groups: [
-      { name: "trumbone" },
-      { name: "senior" },
-      { name: "momz" },
-      { name: "cool people" },
-      { name: "fun runners" },
-      { name: "jedi in training people " },
-    ],
-  };
+  // TODO: Get userId to component
+  const { data: user, error } = useGetProfileById(
+    "8b6d3c61-9e5b-4c3a-b8b9-1c2f71d3e0f0"
+  );
 
-  if (!user.name) {
-    return null;
-  }
+  const userInitials = user?.first_name
+    ? `${user.first_name.charAt(0)}${user.last_name?.charAt(0)}`
+    : "";
+
+  const router = useRouter();
+
+  //TEMP GROUPS
+  const groups = [
+    { name: "trumbone" },
+    { name: "senior" },
+    { name: "momz" },
+    { name: "cool people" },
+    { name: "fun runners" },
+    { name: "jedi in training people " },
+  ];
 
   const onMessagePress = () => {
-    router.replace("/(subpages)/chat/direct/45");
+    router.replace(`/(subpages)/chat/direct/${user?.id}`);
   };
 
   return (
     <View style={[defaultStyles.container, styles.container]}>
       <View style={styles.header}>
-        <Image source={{ uri: user.picture.large }} style={styles.avatar} />
+        <View>
+          {user?.image_url ? (
+            <Image source={{ uri: user.image_url }} style={styles.avatar} />
+          ) : (
+            <View style={styles.initialsContainer}>
+              <Text style={styles.initials}>{userInitials}</Text>
+            </View>
+          )}
+        </View>
         <Text style={styles.username}>
-          {user.name.first} {user.name.last}
+          {user?.first_name} {user?.last_name}
         </Text>
         <Text style={styles.location}>
-          {user.location.city}, {user.location.country}
+          {/* {user.location.city}, {user.location.country} */}
         </Text>
         <TouchableOpacity onPress={onMessagePress} style={styles.messageButton}>
           <Ionicons name="chatbox-outline" size={24} color="white" />
           <Text style={styles.messageButtonText}>
-            Chat with {user.name.first}
+            Chat with {user?.first_name ?? "Me"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -51,21 +62,15 @@ const UserProfile = () => {
       <View style={styles.aboutSection}>
         <Text style={styles.sectionTitle}>About</Text>
         <Text style={styles.aboutText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
+          {user?.about ?? "I am still working on my profile. Say Hi!"}
         </Text>
       </View>
 
       <View style={styles.groupsSection}>
-        <Text style={styles.sectionTitle}>Groups ({user.groups.length})</Text>
-        {user.groups && user.groups.length > 0 ? (
+        <Text style={styles.sectionTitle}>Groups ({groups.length})</Text>
+        {groups && groups.length > 0 ? (
           <View style={styles.pillContainer}>
-            {user.groups.map((group: any, index: any) => (
+            {groups.map((group: any, index: any) => (
               <View key={index} style={styles.pill}>
                 <Text style={styles.pillText}>{group.name}</Text>
               </View>
@@ -86,6 +91,21 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
+  },
+  initialsContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 10,
+    backgroundColor: primary.orange,
+    opacity: 0.75,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  initials: {
+    color: primary.white,
+    fontSize: 30,
+    fontWeight: "bold",
   },
   avatar: {
     width: 120,

@@ -4,6 +4,7 @@ import { View } from "@/components/utils/Themed";
 import EventList from "@/components/Event/EventList";
 import { useGetLoggedInUser } from "@/hooks/api/profiles";
 import { Redirect } from "expo-router";
+import { useGetBandForUser } from "@/hooks/api/bands";
 
 export default function Feed() {
   const { authUser, isLoading } = useGetLoggedInUser();

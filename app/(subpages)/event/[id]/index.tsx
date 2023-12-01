@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
-import EventUserProfile from "@/components/Profile/UserChicklet";
+import UserChicklet from "@/components/Profile/UserChicklet";
 import EventPills from "@/components/Event/EventPills";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
@@ -65,11 +65,7 @@ const EventDetailsPage = ({ event = eventData }) => {
       )}
       <EventPills pills={pills} />
       <View style={styles.contentContainer}>
-        <EventUserProfile
-          username="John Jo"
-          avatarUri={imageUri}
-          headline="title"
-        />
+        <UserChicklet userId="" />
         <View style={styles.card}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.dateText}>{readableDate(startTime)}</Text>

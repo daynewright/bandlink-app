@@ -38,11 +38,8 @@ export default function Profile() {
   // );
 
   const { data: event, error } = useGetSingleEventWithDetails(
-    "3cf2898f-1e80-43aa-a2d9-24d08f35bf10"
+    "db6d3c61-9e5b-4c3a-b8b9-1c2f71d3e0f5"
   );
-
-  console.log(JSON.stringify(event, null, 2));
-  console.log(JSON.stringify(error, null, 2));
 
   // console.log(JSON.stringify(eventsByGroupId, null, 2));
   // const loggedInUserProfile = useProfileStore((state) =>
