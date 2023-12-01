@@ -30,7 +30,7 @@ export const useGetProfileById = (id: string) => {
 
       if (profileImage) {
         const image = supabase.storage
-          .from(`images/profiles/${data.profile_image_id}`)
+          .from(`images/${data.profile_image_id}`)
           .getPublicUrl(profileImage.image_path, {
             transform: {
               height: 150,
