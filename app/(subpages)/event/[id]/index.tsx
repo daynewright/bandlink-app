@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import UserChicklet from "@/components/Profile/UserChicklet";
 import EventPills from "@/components/Event/EventPills";
@@ -12,6 +19,8 @@ import EventFileSection from "@/components/Event/EventFileSection";
 import EventPhotoSection from "@/components/Event/EventPhotosSection";
 import EventCommentSection from "@/components/Event/EventCommentSection";
 import useGetUsers from "@/mockData/userGetUsers";
+import { useLocalSearchParams } from "expo-router";
+import { useGetSingleEventWithDetails } from "@/hooks/api/events";
 
 const eventData = {
   title: "Upper Class Band Reception",
@@ -34,19 +43,12 @@ const eventData = {
   pills: ["Seniors", "Juniors"],
 };
 
-const EventDetailsPage = ({ event = eventData }) => {
-  const {
-    title,
-    description,
-    location,
-    startTime,
-    endTime,
-    eventType,
-    organizerGroup,
-    userId,
-    imageUri,
-    pills,
-  } = event;
+const EventDetailsPage = () => {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: event, error, isFetching } = useGetSingleEventWithDetails(id);
+
+  // console.log(JSON.stringify(event, null, 2));
+
   const readableTime = (timestamp: string) =>
     getReadableDateFrom(timestamp).readableTime;
   const readableDate = (timestamp: string) =>
@@ -54,32 +56,45 @@ const EventDetailsPage = ({ event = eventData }) => {
 
   const users = useGetUsers(35);
 
+  if (isFetching) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  if (!event) {
+    return (
+      <View>
+        <Text>NO event found</Text>
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={defaultStyles.container}>
-      {imageUri && (
+      {"imageUri" && (
         <Image
-          source={{ uri: imageUri }}
+          source={{ uri: "imageUri" }}
           style={styles.image}
           resizeMode="cover"
         />
       )}
-      <EventPills pills={pills} />
+      {/* <EventPills pills={pills} /> */}
       <View style={styles.contentContainer}>
-        <UserChicklet userId="" />
+        <UserChicklet userId={event?.creator_user_id} />
         <View style={styles.card}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.dateText}>{readableDate(startTime)}</Text>
+          <Text style={styles.title}>{event?.event_name}</Text>
+          <Text style={styles.dateText}>{readableDate(event?.event_date)}</Text>
           <Text style={styles.timeText}>
-            Time: {readableTime(startTime)} to {readableTime(endTime)}
+            Time: {readableTime(event?.start_time)} to{" "}
+            {readableTime(event?.end_time)}
           </Text>
-          <Text style={styles.description}>{description}</Text>
+          <Text style={styles.description}>{event?.description}</Text>
           <View style={styles.details}>
-            <Text>Location: {location.name}</Text>
+            {/* <Text>Location: {location.name}</Text>
             <Text>Type: {eventType}</Text>
-            <Text>Organizer: {organizerGroup}</Text>
+            <Text>Organizer: {organizerGroup}</Text> */}
           </View>
         </View>
-        <EventTextSection text={event.about} expandable />
+        <EventTextSection text={eventData.about} expandable />
         <EventAttendeesSection
           attendees={users.map((user) => ({
             name: `${user.name.first} ${user.name.last}`,

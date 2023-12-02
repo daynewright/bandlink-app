@@ -18,7 +18,9 @@ const UserChicklet = ({ userId }: Props) => {
     : "";
 
   return (
-    <TouchableOpacity onPress={() => router.push("/(modals)/profile")}>
+    <TouchableOpacity
+      onPress={() => router.push(`/(modals)/(profile)/${user?.id}`)}
+    >
       <View style={styles.userInfoContainer}>
         <View style={styles.avatarContainer}>
           {user?.image_url ? (

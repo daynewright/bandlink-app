@@ -1,17 +1,22 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { defaultStyles } from "@/constants/Styles";
 import { primary } from "@/constants/Colors";
 import { useGetProfileById } from "@/hooks/api/profiles";
 
 const UserProfile = () => {
-  // TODO: Get userId to component
-  const { data: user, error } = useGetProfileById(
-    "8b6d3c61-9e5b-4c3a-b8b9-1c2f71d3e0f0"
-  );
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: user, error } = useGetProfileById(id);
 
   const userInitials = user?.first_name
     ? `${user.first_name.charAt(0)}${user.last_name?.charAt(0)}`
@@ -30,7 +35,11 @@ const UserProfile = () => {
   ];
 
   const onMessagePress = () => {
-    router.replace(`/(subpages)/chat/direct/${user?.id}`);
+    if (user?.id) {
+      router.replace(`/(subpages)/chat/direct/${user.id}`);
+    } else {
+      Alert.alert("Oops, unable to chat at the moment");
+    }
   };
 
   return (

@@ -22,8 +22,7 @@ export default function Login() {
     });
 
     if (error) {
-      Alert.alert(error.message);
-      setEmail(undefined);
+      Alert.alert("Oops... something went wrong logging in.");
       setPassword(undefined);
     }
   };

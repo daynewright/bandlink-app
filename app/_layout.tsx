@@ -61,7 +61,7 @@ function RootLayoutNav() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="(modals)/profile"
+            name="(modals)/(profile)/[id]"
             options={{ presentation: "modal", headerShown: false }}
           />
           <Stack.Screen

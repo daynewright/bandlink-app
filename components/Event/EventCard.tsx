@@ -14,7 +14,7 @@ type Event = FunctionsRPC<"get_events_for_user_in_band">[0];
 
 const EventCard = ({ event }: { event: Event }) => {
   const {
-    event_name: title,
+    event_name,
     event_id,
     description,
     event_date,
@@ -23,8 +23,8 @@ const EventCard = ({ event }: { event: Event }) => {
     end_time,
     event_type = "missing",
     creator_name,
-    creator_user_id: userId,
-    creator_picture: imageUri,
+    creator_user_id,
+    creator_picture,
     group_names: pills,
     attendees_count,
     messages_count,
@@ -41,7 +41,7 @@ const EventCard = ({ event }: { event: Event }) => {
       <Pressable>
         <View style={styles.card}>
           <Image
-            source={{ uri: imageUri }}
+            source={{ uri: creator_picture }}
             style={styles.image}
             resizeMode="cover"
           />
@@ -52,7 +52,7 @@ const EventCard = ({ event }: { event: Event }) => {
             <Text style={styles.timeText}>
               Time: {readableTime(start_time)} to {readableTime(end_time)}
             </Text>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.title}>{event_name}</Text>
             <Text style={styles.description}>{description}</Text>
             <View style={styles.details}>
               <Text>Location: {location.name}</Text>
