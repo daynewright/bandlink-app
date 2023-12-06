@@ -140,6 +140,7 @@ export interface Database {
       };
       events: {
         Row: {
+          about: string | null;
           band_id: string;
           created_at: string;
           creator_user_id: string;
@@ -147,11 +148,17 @@ export interface Database {
           end_time: string | null;
           event_date: string | null;
           event_name: string;
+          event_type: string | null;
           id: string;
+          location_address: string | null;
+          location_lat: number | null;
+          location_lng: number | null;
+          location_name: string | null;
           owner_user_id: string | null;
           start_time: string | null;
         };
         Insert: {
+          about?: string | null;
           band_id: string;
           created_at?: string;
           creator_user_id: string;
@@ -159,11 +166,17 @@ export interface Database {
           end_time?: string | null;
           event_date?: string | null;
           event_name: string;
+          event_type?: string | null;
           id?: string;
+          location_address?: string | null;
+          location_lat?: number | null;
+          location_lng?: number | null;
+          location_name?: string | null;
           owner_user_id?: string | null;
           start_time?: string | null;
         };
         Update: {
+          about?: string | null;
           band_id?: string;
           created_at?: string;
           creator_user_id?: string;
@@ -171,7 +184,12 @@ export interface Database {
           end_time?: string | null;
           event_date?: string | null;
           event_name?: string;
+          event_type?: string | null;
           id?: string;
+          location_address?: string | null;
+          location_lat?: number | null;
+          location_lng?: number | null;
+          location_name?: string | null;
           owner_user_id?: string | null;
           start_time?: string | null;
         };
@@ -680,6 +698,12 @@ export interface Database {
           attendees_count: number;
           messages_count: number;
           group_names: string[];
+          event_type: string;
+          location_lat: number;
+          location_lng: number;
+          about: string;
+          location_address: string;
+          location_name: string;
         }[];
       };
       get_messages_for_conversation_group: {
@@ -749,6 +773,12 @@ export interface Database {
           files: Json;
           images: Json;
           messages_count: number;
+          event_type: string;
+          location_lat: number;
+          location_lng: number;
+          about: string;
+          location_address: string;
+          location_name: string;
         }[];
       };
       get_users_for_event: {

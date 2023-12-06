@@ -18,12 +18,12 @@ const EventCard = ({ event }: { event: Event }) => {
     event_id,
     description,
     event_date,
-    location = { name: "missing" },
+    location_name,
     start_time,
     end_time,
-    event_type = "missing",
-    creator_name,
-    creator_user_id,
+    event_type,
+    // creator_name,
+    // creator_user_id,
     creator_picture,
     group_names: pills,
     attendees_count,
@@ -55,9 +55,8 @@ const EventCard = ({ event }: { event: Event }) => {
             <Text style={styles.title}>{event_name}</Text>
             <Text style={styles.description}>{description}</Text>
             <View style={styles.details}>
-              <Text>Location: {location.name}</Text>
+              <Text>Location: {location_name}</Text>
               <Text>Type: {event_type}</Text>
-              <Text>Organizer: {creator_name}</Text>
             </View>
           </View>
           <EventActionRow

@@ -32,6 +32,8 @@ const EventDetailsPage = () => {
   const readableDate = (timestamp: string) =>
     getReadableDateFrom(timestamp).readableDate;
 
+  console.log(JSON.stringify(event, null, 2));
+
   if (isFetching) {
     return <ActivityIndicator size="large" />;
   }
@@ -65,12 +67,14 @@ const EventDetailsPage = () => {
           </Text>
           <Text style={styles.description}>{event?.description}</Text>
           <View style={styles.details}>
-            {/* <Text>Location: {location.name}</Text>
-            <Text>Type: {eventType}</Text>
-            <Text>Organizer: {organizerGroup}</Text> */}
+            <Text>Location: {event?.location_name}</Text>
+            <Text>Type: {event?.event_type}</Text>
           </View>
         </View>
-        {/* <EventTextSection text={event?.about} expandable /> */}
+        <EventTextSection
+          text={event?.about ?? "No additional information at the moment."}
+          expandable={event?.about?.length > 50}
+        />
         <EventAttendeesSection attendees={event?.attendees} />
         <EventCommentSection commentCount={event?.messages_count} />
         <EventFileSection files={event?.files} />
