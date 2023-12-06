@@ -6,8 +6,9 @@ import { Link } from "expo-router";
 
 type Props = {
   attendees: {
-    name: string;
+    name?: string;
     avatar?: string;
+    initials?: string;
   }[];
 };
 
@@ -16,38 +17,47 @@ const EventAttendeesSection = ({ attendees }: Props) => {
   const additionalCount = Math.max(0, attendees.length - maxDisplay);
 
   return (
-    <Link href="/(subpages)/event/45/attendees" asChild>
-      <Pressable>
-        <View style={styles.container}>
-          <Text style={styles.title}>Attending ({attendees.length})</Text>
-          <View style={styles.contentContainer}>
-            <View style={styles.avatarContainer}>
-              {attendees.slice(0, maxDisplay).map((attendee, index) => (
-                <View key={index} style={styles.avatarWrapper}>
-                  {attendee.avatar ? (
-                    <Image
-                      source={{ uri: attendee.avatar }}
-                      style={styles.avatarImage}
-                    />
-                  ) : (
-                    <Text style={styles.avatarText}>
-                      {attendee.name.charAt(0)}
-                    </Text>
+    <>
+      {attendees.length ? (
+        <Link href="/(subpages)/event/45/attendees" asChild>
+          <Pressable>
+            <View style={styles.container}>
+              <Text style={styles.title}>Attending ({attendees.length})</Text>
+              <View style={styles.contentContainer}>
+                <View style={styles.avatarContainer}>
+                  {attendees.slice(0, maxDisplay).map((attendee, index) => (
+                    <View key={index} style={styles.avatarWrapper}>
+                      {attendee.avatar ? (
+                        <Image
+                          source={{ uri: attendee.avatar }}
+                          style={styles.avatarImage}
+                        />
+                      ) : (
+                        <Text style={styles.avatarText}>
+                          {attendee.initials}
+                        </Text>
+                      )}
+                    </View>
+                  ))}
+                  {additionalCount > 0 && (
+                    <View style={styles.overlayWrapper}>
+                      <Text style={styles.overlayText}>+{additionalCount}</Text>
+                    </View>
                   )}
                 </View>
-              ))}
-              {additionalCount > 0 && (
-                <View style={styles.overlayWrapper}>
-                  <Text style={styles.overlayText}>+{additionalCount}</Text>
-                </View>
-              )}
-            </View>
 
-            <Ionicons name="chevron-forward" size={20} color="black" />
-          </View>
+                <Ionicons name="chevron-forward" size={20} color="black" />
+              </View>
+            </View>
+          </Pressable>
+        </Link>
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.title}>Attending ({attendees.length})</Text>
+          <Text>No one attending</Text>
         </View>
-      </Pressable>
-    </Link>
+      )}
+    </>
   );
 };
 

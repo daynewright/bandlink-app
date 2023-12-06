@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { View, Text } from "@/components/utils/Themed";
 import { primary } from "@/constants/Colors";
 
-const EventPills = ({ pills }: { pills: string[] }) => {
+const EventPills = ({ pills }: { pills?: string[] }) => {
   return (
     <View style={styles.pillContainer}>
       {pills?.map((pill, index) => (

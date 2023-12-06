@@ -745,9 +745,10 @@ export interface Database {
           creator_name: string;
           creator_picture: string;
           attendees_count: number;
+          attendees: Json;
+          files: Json;
+          images: Json;
           messages_count: number;
-          files: Json[];
-          images: Json[];
         }[];
       };
       get_users_for_event: {

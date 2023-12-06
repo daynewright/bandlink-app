@@ -1,4 +1,3 @@
-import { supabase } from "@/clients/supabase";
 import { primary } from "@/constants/Colors";
 import { useGetProfileById } from "@/hooks/api/profiles";
 import { useRouter } from "expo-router";

@@ -3,8 +3,6 @@ import { useCombinedQuery } from "@/hooks/api/utils";
 import { FunctionsRPC, Row } from "@/types";
 
 export const useGetSingleEventWithDetails = (eventId?: string) => {
-  console.log("INSIDE FETCH", eventId);
-
   const queryKey = ["events", "single", eventId];
 
   const queryFn = async () => {
@@ -15,7 +13,7 @@ export const useGetSingleEventWithDetails = (eventId?: string) => {
       }
     );
 
-    return { data: data[0], error };
+    return { data: data?.[0], error };
   };
 
   return useCombinedQuery<

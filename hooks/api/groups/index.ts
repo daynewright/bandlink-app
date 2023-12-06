@@ -1,3 +1,4 @@
-export * from "./useGetGroupsByBandId";
 export * from "./useGetGroupById";
-export * from "./useGetGroupsByUserId";
+export * from "./useGetGroupsByBandId";
+export * from "./useGetGroupsByEventId";
+export * from "./useGetGroupsByEventId";

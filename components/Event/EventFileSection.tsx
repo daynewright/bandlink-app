@@ -1,25 +1,27 @@
 import React from "react";
-import { StyleSheet, Linking, TouchableOpacity } from "react-native";
+import { StyleSheet, Linking, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { primary } from "@/constants/Colors";
 import { View, Text } from "@/components/utils/Themed";
 
 type File = {
   name: string;
-  link: string;
+  url: string;
 };
 
 type Props = {
-  files: File[];
+  files: {
+    name: string;
+    url: string;
+  }[];
 };
 
 const EventFileSection = ({ files }: Props) => {
   const handleDownload = async (file: File) => {
     try {
-      await Linking.openURL(file.link);
+      await Linking.openURL(file.url);
     } catch (e) {
-      // TODO:  Show error alert //
-      console.log("THE ERROR:", e);
+      Alert.alert("Unable to open this file");
     }
   };
 
