@@ -1,23 +1,24 @@
 import UserChicklet from "@/components/Profile/UserChicklet";
 import { primary } from "@/constants/Colors";
 import { defaultStyles } from "@/constants/Styles";
+import { useGetAttendeesByEventId } from "@/hooks/api/events/useGetAttendeesByEventId";
 import useGetUsers from "@/mockData/userGetUsers";
-import { UserInfo } from "@/types/user";
+import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, FlatList, TextInput } from "react-native";
 
 const UserList = () => {
-  // TODO: fix this mock data.  Pass it in? Use reactQuery?
-  const users = useGetUsers(35);
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: users } = useGetAttendeesByEventId(id);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filtered, setFilteredUsers] = useState<UserInfo[]>(users);
+  const [filtered, setFilteredUsers] = useState(users);
 
   useEffect(() => {
-    if (users.length > 0) {
+    if (users?.length) {
       setFilteredUsers(users);
     }
-  }, [users.length]);
+  }, [users?.length]);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -25,9 +26,9 @@ const UserList = () => {
     const filtered =
       query.length > 0
         ? users?.filter(
-            (user: UserInfo) =>
-              user.name.first.toLowerCase().includes(query.toLowerCase()) ||
-              user.name.last.toLowerCase().includes(query.toLowerCase())
+            (user: any) =>
+              user.first_name.toLowerCase().includes(query.toLowerCase()) ||
+              user.last_name.toLowerCase().includes(query.toLowerCase())
           )
         : users;
 
@@ -44,14 +45,10 @@ const UserList = () => {
       />
       <FlatList
         data={filtered}
-        keyExtractor={(item) => item.cell.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.userContainer}>
-            <UserChicklet
-              username={`${item.name.first} ${item.name.last}`}
-              avatarUri={item.picture.medium}
-              headline={item.location.street.name}
-            />
+            <UserChicklet userId={item.id} />
           </View>
         )}
       />

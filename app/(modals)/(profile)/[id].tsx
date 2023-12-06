@@ -13,26 +13,18 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { defaultStyles } from "@/constants/Styles";
 import { primary } from "@/constants/Colors";
 import { useGetProfileById } from "@/hooks/api/profiles";
+import { useGetGroupsByUserId } from "@/hooks/api/groups/useGetGroupsByUserId";
 
 const UserProfile = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: user, error } = useGetProfileById(id);
+  const { data: groups } = useGetGroupsByUserId(id);
 
   const userInitials = user?.first_name
     ? `${user.first_name.charAt(0)}${user.last_name?.charAt(0)}`
     : "";
 
   const router = useRouter();
-
-  //TEMP GROUPS
-  const groups = [
-    { name: "trumbone" },
-    { name: "senior" },
-    { name: "momz" },
-    { name: "cool people" },
-    { name: "fun runners" },
-    { name: "jedi in training people " },
-  ];
 
   const onMessagePress = () => {
     if (user?.id) {
@@ -76,12 +68,12 @@ const UserProfile = () => {
       </View>
 
       <View style={styles.groupsSection}>
-        <Text style={styles.sectionTitle}>Groups ({groups.length})</Text>
+        <Text style={styles.sectionTitle}>Groups ({groups?.length ?? 0})</Text>
         {groups && groups.length > 0 ? (
           <View style={styles.pillContainer}>
-            {groups.map((group: any, index: any) => (
-              <View key={index} style={styles.pill}>
-                <Text style={styles.pillText}>{group.name}</Text>
+            {groups.map((group: any) => (
+              <View key={group.id} style={styles.pill}>
+                <Text style={styles.pillText}>{group.group_name}</Text>
               </View>
             ))}
           </View>

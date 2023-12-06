@@ -2,7 +2,7 @@ import { supabase } from "@/clients/supabase";
 import { useCombinedQuery } from "@/hooks/api/utils";
 import { Row } from "@/types";
 
-type GroupData = Row<"groups">[] | null;
+type GroupData = Partial<Row<"groups">>[] | null | undefined;
 
 type QueryFnReturn = Promise<{
   data: GroupData;
@@ -25,8 +25,10 @@ export const useGetGroupsByUserId = (userId?: string) => {
       )
       .eq("user_id", userId);
 
+    const flatGroups = data?.flatMap((g) => g.groups);
+
     return {
-      data: data as unknown as GroupData,
+      data: flatGroups,
       error,
     };
   };

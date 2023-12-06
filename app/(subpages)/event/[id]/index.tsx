@@ -32,8 +32,6 @@ const EventDetailsPage = () => {
   const readableDate = (timestamp: string) =>
     getReadableDateFrom(timestamp).readableDate;
 
-  console.log(JSON.stringify(event, null, 2));
-
   if (isFetching) {
     return <ActivityIndicator size="large" />;
   }
@@ -75,7 +73,7 @@ const EventDetailsPage = () => {
           text={event?.about ?? "No additional information at the moment."}
           expandable={event?.about?.length > 50}
         />
-        <EventAttendeesSection attendees={event?.attendees} />
+        <EventAttendeesSection attendees={event?.attendees} eventId={id} />
         <EventCommentSection commentCount={event?.messages_count} />
         <EventFileSection files={event?.files} />
         <EventPhotoSection

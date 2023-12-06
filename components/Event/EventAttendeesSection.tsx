@@ -10,16 +10,17 @@ type Props = {
     avatar?: string;
     initials?: string;
   }[];
+  eventId: string;
 };
 
-const EventAttendeesSection = ({ attendees }: Props) => {
+const EventAttendeesSection = ({ attendees, eventId }: Props) => {
   const maxDisplay = 5;
   const additionalCount = Math.max(0, attendees.length - maxDisplay);
 
   return (
     <>
       {attendees.length ? (
-        <Link href="/(subpages)/event/45/attendees" asChild>
+        <Link href={`/(subpages)/event/${eventId}/attendees`} asChild>
           <Pressable>
             <View style={styles.container}>
               <Text style={styles.title}>Attending ({attendees.length})</Text>
