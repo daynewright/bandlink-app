@@ -15,14 +15,16 @@ export const useGetConversationByTypeId = (type: TypeEnum, id?: string) => {
         .select("*")
         .eq("conversation_type", type)
         .or(`user_id_a.eq.${id},user_id_b.eq.${id}`)
+        .limit(1)
         .single();
     }
 
     return await supabase
       .from("conversations")
       .select("*")
-      .eq("type", type)
+      .eq("conversation_type", type)
       .eq(`${type.toLocaleLowerCase()}_id`, id)
+      .limit(1)
       .single();
   };
 

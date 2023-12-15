@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { Alert, ScrollView, StyleSheet } from "react-native";
 import { View, Text } from "@/components/utils/Themed";
 import { useLocalSearchParams } from "expo-router";
 
@@ -7,12 +7,36 @@ import ChatMessageInput from "@/components/Chat/ChatMessageInput";
 import { defaultStyles } from "@/constants/Styles";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import { useGetEventCommentsById } from "@/hooks/api/messages";
+import { useGetLoggedInProfile } from "@/hooks/api/profiles";
+import { useAddMessageByConversationId } from "@/hooks/api/messages/useAddMessageByConversationId";
+import { useGetConversationByTypeId } from "@/hooks/api/conversations";
 
 const Comments = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: comments } = useGetEventCommentsById(id);
+  const { data: me } = useGetLoggedInProfile();
+  const { data: conversation } = useGetConversationByTypeId("EVENT", id);
+  const { data: comments, refetch: refetchComments } =
+    useGetEventCommentsById(id);
 
-  console.log(JSON.stringify(comments, null, 2));
+  const { mutateAsync: addMessage } = useAddMessageByConversationId(id);
+
+  const onSendMessage = async (message: string) => {
+    const { data, error } = await addMessage({
+      userId: me?.id,
+      conversationId: conversation?.id,
+      message,
+    });
+
+    if (error) {
+      Alert.alert("Oops! Can't add a comment right now.");
+    }
+
+    console.log({ data, error });
+
+    if (data) {
+      await refetchComments();
+    }
+  };
 
   return (
     <View style={defaultStyles.container}>
@@ -24,7 +48,7 @@ const Comments = () => {
           {comments?.length ? (
             comments?.map((c) => (
               <ChatMessage
-                key={c.conversation_id}
+                key={`${c.conversation_id}-${c.created_at}`}
                 message={c.message}
                 userId={c.sender_user_id}
                 timestamp={getReadableDateFrom(c.created_at).readableDate}
@@ -38,7 +62,7 @@ const Comments = () => {
           )}
         </ScrollView>
       </View>
-      <ChatMessageInput onSendMessage={() => null} />
+      <ChatMessageInput onSendMessage={onSendMessage} />
     </View>
   );
 };

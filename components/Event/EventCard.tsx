@@ -62,6 +62,7 @@ const EventCard = ({ event }: { event: Event }) => {
           <EventActionRow
             attendanceCount={attendees_count}
             commentCount={messages_count}
+            eventId={event_id}
           />
         </View>
       </Pressable>

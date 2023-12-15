@@ -7,9 +7,11 @@ import { useRouter } from "expo-router";
 const EventActionRow = ({
   attendanceCount = 0,
   commentCount = 0,
+  eventId,
 }: {
   attendanceCount: number;
   commentCount: number;
+  eventId: string;
 }) => {
   const router = useRouter();
   return (
@@ -20,7 +22,7 @@ const EventActionRow = ({
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.actionButton}
-        onPress={() => router.push("/(subpages)/event/123/comments")}
+        onPress={() => router.push(`/(subpages)/event/${eventId}/comments`)}
       >
         <Ionicons name="chatbubbles-outline" size={20} />
         <Text style={styles.actionText}>{commentCount}</Text>

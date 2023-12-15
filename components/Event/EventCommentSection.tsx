@@ -9,7 +9,9 @@ type Props = {
   eventId: string;
 };
 
-const EventAttendeesSection = ({ commentCount, eventId }: Props) => {
+const EventCommentSection = ({ commentCount, eventId }: Props) => {
+  console.log({ eventId });
+
   return (
     <Link href={`/(subpages)/event/${eventId}/comments`} asChild>
       <Pressable>
@@ -53,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventAttendeesSection;
+export default EventCommentSection;
