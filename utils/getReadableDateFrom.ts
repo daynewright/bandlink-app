@@ -20,6 +20,7 @@ const getReadableDateFrom = (dateString: string) => {
       readableTime: format(parsedDate, "h:mm a"),
     };
   } catch (e) {
+    console.log("not able to format time:", e);
     return {
       readableDistance: "-",
       daysDifference: "-",

@@ -1,8 +1,9 @@
-import { primary } from "@/constants/Colors";
-import { useGetProfileById } from "@/hooks/api/profiles";
-import { useRouter } from "expo-router";
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
+import { primary } from "@/constants/Colors";
+import UserAvatar from "@/components/Profile/UserAvatar";
+import { useGetProfileById } from "@/hooks/api/profiles";
 
 type Props = {
   userId: string;
@@ -21,15 +22,7 @@ const UserChicklet = ({ userId }: Props) => {
       onPress={() => router.push(`/(modals)/(profile)/${user?.id}`)}
     >
       <View style={styles.userInfoContainer}>
-        <View style={styles.avatarContainer}>
-          {user?.image_url ? (
-            <Image source={{ uri: user.image_url }} style={styles.avatar} />
-          ) : (
-            <View style={styles.initialsContainer}>
-              <Text style={styles.initials}>{userInitials}</Text>
-            </View>
-          )}
-        </View>
+        <UserAvatar user={user} />
         <View style={styles.userInfo}>
           <Text style={styles.name}>{`${user?.first_name ?? "Unknown"} ${
             user?.last_name ?? ""

@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import UserChicklet from "@/components/Profile/UserChicklet";
 import EventPills from "@/components/Event/EventPills";
@@ -18,7 +19,7 @@ import EventAttendeesSection from "@/components/Event/EventAttendeesSection";
 import EventFileSection from "@/components/Event/EventFileSection";
 import EventPhotoSection from "@/components/Event/EventPhotosSection";
 import EventCommentSection from "@/components/Event/EventCommentSection";
-import { useLocalSearchParams } from "expo-router";
+
 import { useGetSingleEventWithDetails } from "@/hooks/api/events";
 import { useGetGroupsByEventId } from "@/hooks/api/groups";
 
@@ -71,35 +72,12 @@ const EventDetailsPage = () => {
         </View>
         <EventTextSection
           text={event?.about ?? "No additional information at the moment."}
-          expandable={event?.about?.length > 50}
+          expandable={event?.about?.length > 75}
         />
-        <EventAttendeesSection attendees={event?.attendees} eventId={id} />
-        <EventCommentSection commentCount={event?.messages_count} />
+        <EventAttendeesSection eventId={id} attendees={event.attendees} />
+        <EventCommentSection commentCount={event.messages_count} eventId={id} />
         <EventFileSection files={event?.files} />
-        <EventPhotoSection
-          photos={[
-            {
-              uri: `https://picsum.photos/id/${
-                Math.floor(Math.random() * 40) + 1
-              }/600/800`,
-            },
-            {
-              uri: `https://picsum.photos/id/${
-                Math.floor(Math.random() * 40) + 1
-              }/600/800`,
-            },
-            {
-              uri: `https://picsum.photos/id/${
-                Math.floor(Math.random() * 40) + 1
-              }/600/800`,
-            },
-            {
-              uri: `https://picsum.photos/id/${
-                Math.floor(Math.random() * 40) + 1
-              }/600/800`,
-            },
-          ]}
-        />
+        <EventPhotoSection eventId={id} photos={event.images} />
         {/* <EventStaticMap /> */}
       </View>
     </ScrollView>

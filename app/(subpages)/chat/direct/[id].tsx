@@ -5,9 +5,14 @@ import { useLocalSearchParams } from "expo-router";
 import ChatMessage from "@/components/Chat/ChatMessage";
 import ChatUnreadNotification from "@/components/Chat/ChatUnreadNotification";
 import ChatMessageInput from "@/components/Chat/ChatMessageInput";
+import { useGetDirectMessagesByConversationId } from "@/hooks/api/messages";
+import getReadableDateFrom from "@/utils/getReadableDateFrom";
 
 const DirectChat = () => {
-  const { id } = useLocalSearchParams();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { data: messages } = useGetDirectMessagesByConversationId(id);
+
+  console.log(JSON.stringify(messages, null, 2));
 
   return (
     <View style={defaultStyles.container}>
@@ -16,7 +21,14 @@ const DirectChat = () => {
           contentContainerStyle={styles.scrollViewContent}
           showsVerticalScrollIndicator={false}
         >
-          <ChatMessage
+          {messages?.map((m) => (
+            <ChatMessage
+              userId={m.sender_id}
+              message={m.message}
+              timestamp={getReadableDateFrom(m.created_at).readableDate}
+            />
+          ))}
+          {/* <ChatMessage
             message="test message"
             isCurrentUser
             user={{
@@ -49,7 +61,7 @@ const DirectChat = () => {
               }/200`,
             }}
             timestamp="Fri, Aug 10, 2022 - 11:45pm"
-          />
+          /> */}
         </ScrollView>
       </View>
       <ChatMessageInput onSendMessage={() => null} />

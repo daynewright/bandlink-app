@@ -706,6 +706,18 @@ export interface Database {
           location_name: string;
         }[];
       };
+      get_group_conversations_by_user_id: {
+        Args: {
+          p_user_id: string;
+        };
+        Returns: {
+          group_id: string;
+          group_name: string;
+          conversation_id: string;
+          users_count: number;
+          latest_message_date: string;
+        }[];
+      };
       get_messages_for_conversation_group: {
         Args: {
           p_conversation_id: string;

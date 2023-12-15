@@ -2,7 +2,7 @@ import { supabase } from "@/clients/supabase";
 import { useCombinedQuery } from "@/hooks/api/utils";
 import { Row } from "@/types";
 
-type UserData = (Row<"users_profile"> & { image_url?: string }) | null;
+export type UserData = (Row<"users_profile"> & { image_url?: string }) | null;
 
 type QueryFnReturn = Promise<{
   data: UserData;

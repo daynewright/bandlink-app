@@ -6,11 +6,12 @@ import { Link } from "expo-router";
 
 type Props = {
   commentCount?: number;
+  eventId: string;
 };
 
-const EventAttendeesSection = ({ commentCount }: Props) => {
+const EventAttendeesSection = ({ commentCount, eventId }: Props) => {
   return (
-    <Link href="/(subpages)/event/45/comments" asChild>
+    <Link href={`/(subpages)/event/${eventId}/comments`} asChild>
       <Pressable>
         <View style={styles.container}>
           <Text style={styles.title}>Comments ({commentCount ?? 0})</Text>

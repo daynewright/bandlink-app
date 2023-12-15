@@ -29,14 +29,18 @@ const EventFileSection = ({ files }: Props) => {
     <View style={styles.container}>
       <Text style={styles.title}>Files ({files.length})</Text>
       <View style={styles.fileContainer}>
-        {files.map((file, index) => (
-          <TouchableOpacity key={index} onPress={() => handleDownload(file)}>
-            <View style={styles.fileWrapper}>
-              <Ionicons name="file-tray" size={20} color={primary.darkgrey} />
-              <Text style={styles.fileName}>{file.name}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {files.length ? (
+          files.map((file, index) => (
+            <TouchableOpacity key={index} onPress={() => handleDownload(file)}>
+              <View style={styles.fileWrapper}>
+                <Ionicons name="file-tray" size={20} color={primary.darkgrey} />
+                <Text style={styles.fileName}>{file.name}</Text>
+              </View>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text>There are no files for this event.</Text>
+        )}
       </View>
     </View>
   );

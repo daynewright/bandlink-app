@@ -12,23 +12,26 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { defaultStyles } from "@/constants/Styles";
 import { primary } from "@/constants/Colors";
-import { useGetProfileById } from "@/hooks/api/profiles";
+import { useGetLoggedInProfile, useGetProfileById } from "@/hooks/api/profiles";
 import { useGetGroupsByUserId } from "@/hooks/api/groups/useGetGroupsByUserId";
+import { useGetConversationByTypeId } from "@/hooks/api/conversations";
 
 const UserProfile = () => {
+  const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: user, error } = useGetProfileById(id);
+
+  const { data: me } = useGetLoggedInProfile();
+  const { data: user } = useGetProfileById(id);
   const { data: groups } = useGetGroupsByUserId(id);
+  const { data: conversation } = useGetConversationByTypeId("USER", user?.id);
 
   const userInitials = user?.first_name
     ? `${user.first_name.charAt(0)}${user.last_name?.charAt(0)}`
     : "";
 
-  const router = useRouter();
-
   const onMessagePress = () => {
     if (user?.id) {
-      router.replace(`/(subpages)/chat/direct/${user.id}`);
+      router.replace(`/(subpages)/chat/direct/${conversation?.id}`);
     } else {
       Alert.alert("Oops, unable to chat at the moment");
     }
@@ -49,15 +52,19 @@ const UserProfile = () => {
         <Text style={styles.username}>
           {user?.first_name} {user?.last_name}
         </Text>
-        <Text style={styles.location}>
-          {/* {user.location.city}, {user.location.country} */}
-        </Text>
-        <TouchableOpacity onPress={onMessagePress} style={styles.messageButton}>
-          <Ionicons name="chatbox-outline" size={24} color="white" />
-          <Text style={styles.messageButtonText}>
-            Chat with {user?.first_name ?? "Me"}
-          </Text>
-        </TouchableOpacity>
+        {me?.id !== user?.id ? (
+          <TouchableOpacity
+            onPress={onMessagePress}
+            style={styles.messageButton}
+          >
+            <Ionicons name="chatbox-outline" size={24} color="white" />
+            <Text style={styles.messageButtonText}>
+              Chat with {user?.first_name ?? "Me"}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text>This is you! 😀</Text>
+        )}
       </View>
 
       <View style={styles.aboutSection}>

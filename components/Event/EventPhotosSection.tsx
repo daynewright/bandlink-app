@@ -1,21 +1,23 @@
-import { primary } from "@/constants/Colors";
-import { useRouter } from "expo-router";
 import React from "react";
 import { Image, FlatList, StyleSheet, Pressable } from "react-native";
+import { useRouter } from "expo-router";
+import { primary } from "@/constants/Colors";
 import { View, Text } from "@/components/utils/Themed";
 
 type Props = {
   photos: {
-    label?: string;
+    id: string;
+    name?: string;
     uri: string;
   }[];
+  eventId: string;
 };
 
-const EventPhotoSection = ({ photos }: Props) => {
+const EventPhotoSection = ({ photos, eventId }: Props) => {
   const router = useRouter();
 
   const gotToPhotos = () => {
-    router.push("/(subpages)/event/45/photosFullView");
+    router.push(`/(subpages)/event/${eventId}/photosFullView`);
   };
 
   return (
@@ -23,18 +25,24 @@ const EventPhotoSection = ({ photos }: Props) => {
       <Pressable onPress={gotToPhotos}>
         <Text style={styles.title}>Photos ({photos.length})</Text>
       </Pressable>
-      <FlatList
-        data={photos}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => (
-          <Pressable onPress={gotToPhotos}>
-            <Image source={{ uri: item.uri }} style={styles.photo} />
-          </Pressable>
+      <View style={styles.photoContainer}>
+        {photos.length ? (
+          <FlatList
+            data={photos}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item }) => (
+              <Pressable onPress={gotToPhotos}>
+                <Image source={{ uri: item.uri }} style={styles.photo} />
+              </Pressable>
+            )}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.container}
+          />
+        ) : (
+          <Text>No photos in this event.</Text>
         )}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.container}
-      />
+      </View>
     </View>
   );
 };
@@ -56,6 +64,9 @@ const styles = StyleSheet.create({
     borderColor: primary.lightgrey,
     borderWidth: StyleSheet.hairlineWidth,
     marginRight: 8,
+  },
+  photoContainer: {
+    marginBottom: 50,
   },
 });
 

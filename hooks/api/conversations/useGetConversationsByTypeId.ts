@@ -3,9 +3,9 @@ import { Row, Database } from "@/types";
 import { useCombinedQuery } from "@/hooks/api/utils";
 
 type TypeEnum = Database["public"]["Enums"]["conversation_type"];
-type ConversationsData = Row<"conversations">[] | null;
+type ConversationsData = Row<"conversations"> | null;
 
-export const useGetConversationByTypeId = (type: TypeEnum, id: string) => {
+export const useGetConversationByTypeId = (type: TypeEnum, id?: string) => {
   const queryKey = ["conversations", type, id];
 
   const queryFn = async () => {
@@ -14,14 +14,16 @@ export const useGetConversationByTypeId = (type: TypeEnum, id: string) => {
         .from("conversations")
         .select("*")
         .eq("conversation_type", type)
-        .or(`user_id_a.eq.${id},user_id_b.eq.${id}`);
+        .or(`user_id_a.eq.${id},user_id_b.eq.${id}`)
+        .single();
     }
 
     return await supabase
       .from("conversations")
       .select("*")
       .eq("type", type)
-      .eq(`${type.toLocaleLowerCase()}_id`, id);
+      .eq(`${type.toLocaleLowerCase()}_id`, id)
+      .single();
   };
 
   return useCombinedQuery<ConversationsData>({
