@@ -1,5 +1,11 @@
-import { View, ScrollView, StyleSheet } from "react-native";
-import React from "react";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import React, { useRef } from "react";
 import { defaultStyles } from "@/constants/Styles";
 import { useLocalSearchParams } from "expo-router";
 import ChatMessage from "@/components/Chat/ChatMessage";
@@ -12,23 +18,31 @@ const DirectChat = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: messages } = useGetDirectMessagesByConversationId(id);
 
-  console.log(JSON.stringify(messages, null, 2));
+  const scrollViewRef = useRef<ScrollView>(null);
 
   return (
-    <View style={defaultStyles.container}>
-      <View style={styles.topContent}>
-        <ScrollView
-          contentContainerStyle={styles.scrollViewContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {messages?.map((m) => (
-            <ChatMessage
-              userId={m.sender_id}
-              message={m.message}
-              timestamp={getReadableDateFrom(m.created_at).readableDate}
-            />
-          ))}
-          {/* <ChatMessage
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <View style={defaultStyles.container}>
+        <View style={styles.topContent}>
+          <ScrollView
+            ref={scrollViewRef}
+            contentContainerStyle={styles.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+            onContentSizeChange={() => {
+              scrollViewRef.current?.scrollToEnd();
+            }}
+          >
+            {messages?.map((m) => (
+              <ChatMessage
+                userId={m.sender_id}
+                message={m.message}
+                timestamp={getReadableDateFrom(m.created_at).readableDate}
+              />
+            ))}
+            {/* <ChatMessage
             message="test message"
             isCurrentUser
             user={{
@@ -62,10 +76,11 @@ const DirectChat = () => {
             }}
             timestamp="Fri, Aug 10, 2022 - 11:45pm"
           /> */}
-        </ScrollView>
+          </ScrollView>
+        </View>
+        <ChatMessageInput onSendMessage={() => null} />
       </View>
-      <ChatMessageInput onSendMessage={() => null} />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

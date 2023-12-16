@@ -5,7 +5,7 @@ import { FunctionsRPC } from "@/types";
 export const useGetEventCommentsById = (
   eventId?: string,
   pageNumber = 1,
-  itemsPerPage = 10
+  itemsPerPage = 20
 ) => {
   const queryKey = ["messages", "events", eventId];
 
