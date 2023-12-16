@@ -19,8 +19,10 @@ import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import { useGetEventCommentsById } from "@/hooks/api/messages";
 import { useGetLoggedInProfile } from "@/hooks/api/profiles";
 import { useAddMessageByConversationId } from "@/hooks/api/messages/useAddMessageByConversationId";
-import { useGetConversationByTypeId } from "@/hooks/api/conversations";
-import { useAddConversationByEventId } from "@/hooks/api/conversations/useAddConversationByEventId";
+import {
+  useAddConversationByTypeId,
+  useGetConversationByTypeId,
+} from "@/hooks/api/conversations";
 
 const Comments = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -41,7 +43,7 @@ const Comments = () => {
   const isLoading = loadingMe || loadingConvo || loadingComments;
 
   const { mutateAsync: addMessage } = useAddMessageByConversationId(id);
-  const { mutateAsync: addConversation } = useAddConversationByEventId();
+  const { mutateAsync: addConversation } = useAddConversationByTypeId("EVENT");
 
   const onSendMessage = async (message: string) => {
     Keyboard.dismiss();
@@ -49,7 +51,7 @@ const Comments = () => {
     // if no conversation, create then add message
     if (!convo?.id) {
       const { data: newConvo, error: convoError } = await addConversation({
-        eventId: id,
+        id,
       });
 
       if (convoError) {
