@@ -4,10 +4,13 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Keyboard,
 } from "react-native";
 import React, { useRef } from "react";
 import { defaultStyles } from "@/constants/Styles";
 import { useLocalSearchParams } from "expo-router";
+import { useHeaderHeight } from "@react-navigation/elements";
+
 import ChatMessage from "@/components/Chat/ChatMessage";
 import ChatUnreadNotification from "@/components/Chat/ChatUnreadNotification";
 import ChatMessageInput from "@/components/Chat/ChatMessageInput";
@@ -19,10 +22,16 @@ const DirectChat = () => {
   const { data: messages } = useGetDirectMessagesByConversationId(id);
 
   const scrollViewRef = useRef<ScrollView>(null);
+  const height = useHeaderHeight();
+
+  const onSendMessage = () => {
+    Keyboard.dismiss();
+  };
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={height - 225}
       style={{ flex: 1 }}
     >
       <View style={defaultStyles.container}>
@@ -42,43 +51,9 @@ const DirectChat = () => {
                 timestamp={getReadableDateFrom(m.created_at).readableDate}
               />
             ))}
-            {/* <ChatMessage
-            message="test message"
-            isCurrentUser
-            user={{
-              name: "Jony Joe",
-              avatar: `https://picsum.photos/${
-                Math.floor(Math.random() * 40) + 1
-              }/200`,
-            }}
-            timestamp="Fri, Aug 10, 2022 - 10:30pm"
-          />
-          <ChatUnreadNotification />
-          <ChatMessage
-            message="This is a really long message that I want to add to this chat"
-            isCurrentUser={false}
-            user={{
-              name: "Mike Mark",
-              avatar: `https://picsum.photos/${
-                Math.floor(Math.random() * 40) + 1
-              }/200`,
-            }}
-            timestamp="Fri, Aug 10, 2022 - 11:30pm"
-          />
-          <ChatMessage
-            message="that is a great message. Thanks for adding it and telling me about it."
-            isCurrentUser={false}
-            user={{
-              name: "Mike Mark",
-              avatar: `https://picsum.photos/${
-                Math.floor(Math.random() * 40) + 1
-              }/200`,
-            }}
-            timestamp="Fri, Aug 10, 2022 - 11:45pm"
-          /> */}
           </ScrollView>
         </View>
-        <ChatMessageInput onSendMessage={() => null} />
+        <ChatMessageInput onSendMessage={onSendMessage} />
       </View>
     </KeyboardAvoidingView>
   );

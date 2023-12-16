@@ -20,12 +20,15 @@ import { useGetEventCommentsById } from "@/hooks/api/messages";
 import { useGetLoggedInProfile } from "@/hooks/api/profiles";
 import { useAddMessageByConversationId } from "@/hooks/api/messages/useAddMessageByConversationId";
 import { useGetConversationByTypeId } from "@/hooks/api/conversations";
+import { useAddConversationByEventId } from "@/hooks/api/conversations/useAddConversationByEventId";
 
 const Comments = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: me, isLoading: loadingMe } = useGetLoggedInProfile();
-  const { data: conversation, isLoading: loadingConvo } =
-    useGetConversationByTypeId("EVENT", id);
+  const { data: convo, isLoading: loadingConvo } = useGetConversationByTypeId(
+    "EVENT",
+    id
+  );
   const {
     data: comments,
     refetch: refetchComments,
@@ -38,21 +41,51 @@ const Comments = () => {
   const isLoading = loadingMe || loadingConvo || loadingComments;
 
   const { mutateAsync: addMessage } = useAddMessageByConversationId(id);
+  const { mutateAsync: addConversation } = useAddConversationByEventId();
 
   const onSendMessage = async (message: string) => {
     Keyboard.dismiss();
-    const { data, error } = await addMessage({
-      userId: me?.id,
-      conversationId: conversation?.id,
-      message,
-    });
 
-    if (error) {
-      Alert.alert("Oops! Can't add a comment right now.");
-    }
+    // if no conversation, create then add message
+    if (!convo?.id) {
+      const { data: newConvo, error: convoError } = await addConversation({
+        eventId: id,
+      });
 
-    if (data) {
-      await refetchComments();
+      if (convoError) {
+        Alert.alert("Oops! Can't add a comment right now.");
+      }
+
+      if (newConvo) {
+        const { data: newMessage, error: messageError } = await addMessage({
+          userId: me?.id,
+          conversationId: newConvo.id,
+          message,
+        });
+
+        if (messageError) {
+          Alert.alert("Oops! Can't add a comment right now.");
+        }
+
+        if (newMessage) {
+          await refetchComments();
+        }
+      }
+    } else {
+      //if conversation just add message
+      const { data, error } = await addMessage({
+        userId: me?.id,
+        conversationId: convo?.id,
+        message,
+      });
+
+      if (error) {
+        Alert.alert("Oops! Can't add a comment right now.");
+      }
+
+      if (data) {
+        await refetchComments();
+      }
     }
   };
 
@@ -113,6 +146,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   empty: {
+    flex: 1,
     alignItems: "center",
     marginTop: 20,
   },
