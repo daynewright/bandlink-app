@@ -13,8 +13,8 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { defaultStyles } from "@/constants/Styles";
 import { primary } from "@/constants/Colors";
 import { useGetLoggedInProfile, useGetProfileById } from "@/hooks/api/profiles";
-import { useGetGroupsByUserId } from "@/hooks/api/groups/useGetGroupsByUserId";
 import { useGetConversationByTypeId } from "@/hooks/api/conversations";
+import UserGroups from "@/components/Profile/UserGroups";
 
 const UserProfile = () => {
   const router = useRouter();
@@ -22,8 +22,9 @@ const UserProfile = () => {
 
   const { data: me } = useGetLoggedInProfile();
   const { data: user } = useGetProfileById(id);
-  const { data: groups } = useGetGroupsByUserId(id);
-  const { data: conversation } = useGetConversationByTypeId("USER", user?.id);
+  const { data: conversation } = useGetConversationByTypeId("USER", me?.id);
+
+  console.log(JSON.stringify(conversation, null, 2));
 
   const userInitials = user?.first_name
     ? `${user.first_name.charAt(0)}${user.last_name?.charAt(0)}`
@@ -74,20 +75,7 @@ const UserProfile = () => {
         </Text>
       </View>
 
-      <View style={styles.groupsSection}>
-        <Text style={styles.sectionTitle}>Groups ({groups?.length ?? 0})</Text>
-        {groups && groups.length > 0 ? (
-          <View style={styles.pillContainer}>
-            {groups.map((group: any) => (
-              <View key={group.id} style={styles.pill}>
-                <Text style={styles.pillText}>{group.group_name}</Text>
-              </View>
-            ))}
-          </View>
-        ) : (
-          <Text style={styles.noDataText}>No groups to display</Text>
-        )}
-      </View>
+      <UserGroups userId={user?.id} />
     </View>
   );
 };

@@ -1,5 +1,13 @@
 import { useRef } from "react";
-import { FlatList, ListRenderItem, Pressable, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  ListRenderItem,
+  Pressable,
+  View,
+  Text,
+  StyleSheet,
+} from "react-native";
 import { Link } from "expo-router";
 import ChatGroupPreviewCard from "@/components/Chat/ChatGroupPreviewCard";
 
@@ -11,11 +19,9 @@ const ChatDirectList = () => {
   const eventListRef = useRef<FlatList>(null);
 
   const { data: user } = useGetLoggedInProfile();
-  const { data: groupConversations, error } = useGetGroupConversationsByUserId(
-    user?.id
-  );
 
-  console.log(JSON.stringify(groupConversations, null, 2), error);
+  const { data: groupConversations, isLoading: loadingGroups } =
+    useGetGroupConversationsByUserId(user?.id);
 
   const RenderFeedItem: ListRenderItem<any> = ({ item }) => {
     // need to get image for the group //
@@ -37,15 +43,34 @@ const ChatDirectList = () => {
     );
   };
 
+  const RenderEmpty = () => {
+    return (
+      <View style={styles.empty}>
+        <Text>No group leaders have started conversations. 😔</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={{ width: "100%", flex: 1 }}>
-      <FlatList
-        ref={eventListRef}
-        data={groupConversations}
-        renderItem={RenderFeedItem}
-      />
+      {loadingGroups ? (
+        <ActivityIndicator size="small" />
+      ) : (
+        <FlatList
+          ref={eventListRef}
+          data={groupConversations}
+          ListEmptyComponent={RenderEmpty}
+          renderItem={RenderFeedItem}
+        />
+      )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  empty: {
+    margin: 25,
+  },
+});
 
 export default ChatDirectList;

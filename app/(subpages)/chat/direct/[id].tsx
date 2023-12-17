@@ -78,6 +78,7 @@ const DirectChat = () => {
               >
                 {messages?.map((m) => (
                   <ChatMessage
+                    key={m.message_id}
                     userId={m.sender_id}
                     message={m.message}
                     timestamp={getReadableDateFrom(m.created_at).readableDate}

@@ -74,7 +74,7 @@ const Comments = () => {
         }
       }
     } else {
-      //if conversation just add message
+      //if conversation, just add message
       const { data, error } = await addMessage({
         userId: me?.id,
         conversationId: convo?.id,
@@ -153,7 +153,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   scrollViewContent: {
-    flexGrow: 1,
     justifyContent: "flex-end",
   },
 });
