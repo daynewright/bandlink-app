@@ -22,9 +22,7 @@ const UserProfile = () => {
 
   const { data: me } = useGetLoggedInProfile();
   const { data: user } = useGetProfileById(id);
-  const { data: conversation } = useGetConversationByTypeId("USER", me?.id);
-
-  console.log(JSON.stringify(conversation, null, 2));
+  const { data: conversation } = useGetConversationByTypeId("USER", user?.id);
 
   const userInitials = user?.first_name
     ? `${user.first_name.charAt(0)}${user.last_name?.charAt(0)}`
@@ -32,7 +30,10 @@ const UserProfile = () => {
 
   const onMessagePress = () => {
     if (user?.id) {
-      router.replace(`/(subpages)/chat/direct/${conversation?.id}`);
+      router.replace({
+        pathname: `/(subpages)/chat/direct/${conversation?.id}`,
+        params: { userId: user.id },
+      });
     } else {
       Alert.alert("Oops, unable to chat at the moment");
     }

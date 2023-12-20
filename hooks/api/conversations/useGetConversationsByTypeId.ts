@@ -17,8 +17,8 @@ export const useGetConversationByTypeId = (type: TypeEnum, id?: string) => {
         .from("conversations")
         .select("*")
         .eq("conversation_type", type)
-        .or(`user_id_a.eq.${id},user_id_b.eq.${me?.id}`)
-        .or(`user_id_a.eq.${me?.id},user_id_b.eq.${id}`)
+        .or(`user_id_a.eq.${me?.id},user_id_a.eq.${id}`)
+        .or(`user_id_b.eq.${me?.id},user_id_b.eq.${id}`)
         .limit(1)
         .single();
     }

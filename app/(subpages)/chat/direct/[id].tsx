@@ -8,7 +8,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { defaultStyles } from "@/constants/Styles";
 import { useLocalSearchParams } from "expo-router";
 import { useHeaderHeight } from "@react-navigation/elements";
@@ -23,36 +23,79 @@ import {
 } from "@/hooks/api/messages";
 import getReadableDateFrom from "@/utils/getReadableDateFrom";
 import { useGetLoggedInProfile } from "@/hooks/api/profiles";
+import { useAddConversationByTypeId } from "@/hooks/api/conversations";
+
+type Params = {
+  id?: string;
+  userId?: string;
+};
 
 const DirectChat = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: me, isLoading: loadingMe } = useGetLoggedInProfile();
+  const { id, userId } = useLocalSearchParams<Params>();
+  const [convoId, setConvoId] = useState(id);
+
   const {
     data: messages,
     refetch: refetchMessages,
     isLoading: loadingMessages,
-  } = useGetDirectMessagesByConversationId(id);
-  const { mutateAsync: addMessage } = useAddMessageByConversationId(id);
+  } = useGetDirectMessagesByConversationId(convoId);
+
+  console.log({ messages, convoId });
 
   const scrollViewRef = useRef<ScrollView>(null);
   const height = useHeaderHeight();
+
+  const { data: me, isLoading: loadingMe } = useGetLoggedInProfile();
+  const { mutateAsync: addUserConversation } =
+    useAddConversationByTypeId("USER");
+  const { mutateAsync: addMessage } = useAddMessageByConversationId(convoId);
 
   const isLoading = loadingMe || loadingMessages;
 
   const onSendMessage = async (message: string) => {
     Keyboard.dismiss();
-    const { data, error } = await addMessage({
-      conversationId: id,
-      userId: me?.id,
-      message,
-    });
 
-    if (data) {
-      await refetchMessages();
-    }
+    // if no conversation, create then add message
+    if (convoId === "undefined") {
+      const { data: newConvo, error: convoError } = await addUserConversation({
+        userA: userId,
+        userB: me?.id,
+      });
 
-    if (error) {
-      Alert.alert("Oops! Can't send a message right now.");
+      if (convoError) {
+        Alert.alert("Oops! Can't send a message right now.");
+      }
+      if (newConvo) {
+        const { data: newMessage, error: messageError } = await addMessage({
+          userId: me?.id,
+          conversationId: newConvo.id,
+          message,
+        });
+
+        if (messageError) {
+          Alert.alert("Oops! Can't send a message right now.");
+        }
+        if (newMessage) {
+          setConvoId(newConvo.id);
+        }
+      }
+    } else {
+      //if conversation, just add message
+      const { data, error } = await addMessage({
+        conversationId: convoId,
+        userId: me?.id,
+        message,
+      });
+
+      console.log({ error });
+
+      if (data) {
+        await refetchMessages();
+      }
+
+      if (error) {
+        Alert.alert("Oops! Can't send a message right now.");
+      }
     }
   };
 

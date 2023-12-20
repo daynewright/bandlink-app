@@ -20,8 +20,6 @@ const Profile = () => {
   const { authUser, isLoading } = useGetLoggedInUser();
   const { data: me } = useGetLoggedInProfile();
 
-  console.log(JSON.stringify(me, null, 2));
-
   const logoutUser = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) Alert.alert(error.message);

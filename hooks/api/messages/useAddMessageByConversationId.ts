@@ -1,7 +1,7 @@
 import { supabase } from "@/clients/supabase";
 import { useCombinedMutation } from "@/hooks/api/utils";
 
-export const useAddMessageByConversationId = (conversationId: string) => {
+export const useAddMessageByConversationId = (conversationId?: string) => {
   const mutationKey = ["messages", conversationId];
 
   const mutationFn = async (variables: {
